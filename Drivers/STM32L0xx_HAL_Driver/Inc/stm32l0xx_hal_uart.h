@@ -800,11 +800,17 @@ typedef  void (*pUART_RxEventCallbackTypeDef)(struct __UART_HandleTypeDef *huart
   * @param  __HANDLE__ specifies the UART Handle.
   * @retval None
   */
-#define __HAL_UART_FLUSH_DRREGISTER(__HANDLE__)  \
+
+/*
+ *
+ #define __HAL_UART_FLUSH_DRREGISTER(__HANDLE__)  \
   do{                \
     SET_BIT((__HANDLE__)->Instance->RQR, UART_RXDATA_FLUSH_REQUEST); \
     SET_BIT((__HANDLE__)->Instance->RQR, UART_TXDATA_FLUSH_REQUEST); \
   }  while(0U)
+*/
+
+#define __HAL_UART_FLUSH_DRREGISTER(__HANDLE) ((__HANDLE)->Instance->RDR)
 
 /** @brief  Clear the specified UART pending flag.
   * @param  __HANDLE__ specifies the UART Handle.
