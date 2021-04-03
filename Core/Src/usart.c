@@ -197,7 +197,6 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
 /* USER CODE BEGIN 1 */
 void  USER_UART_IRQHandler(UART_HandleTypeDef *huart) {
 	if( huart ->Instance  ==  USART2 ) {
-		//HAL_UART_Receive(&huart2 , &rx_data, sizeof(rx_data), 10);
 		rx_data=__HAL_UART_FLUSH_DRREGISTER(huart);
 		static  char  rx_head;
 		rx_head = RX_BUFFER_HEAD + 1;
@@ -209,7 +208,18 @@ void  USER_UART_IRQHandler(UART_HandleTypeDef *huart) {
 			RX_BUFFER_HEAD = rx_head;
 		}
 	}
-}
+	if( huart ->Instance  ==  LPUART1 ) {
+		rx_data_lp=__HAL_UART_FLUSH_DRREGISTER(huart);
+		static  char  rx_head_lp;
+		rx_head_lp = RX_BUFFER_HEAD_LP + 1;
+		if( rx_head_lp  ==  BUFSIZE ) {
+			rx_head_lp = 0;
+		}
+		if( rx_head_lp  !=  RX_BUFFER_TAIL_LP ) {
+			RX_BUFFER_LP[RX_BUFFER_HEAD_LP] = rx_data_lp;
+			RX_BUFFER_HEAD_LP = rx_head_lp;
+		}
+	}}
 
 void  USART2_SendChar(uint8_t c) {
 	HAL_UART_Transmit (&huart2 , &c, sizeof(c), 10);
@@ -233,6 +243,31 @@ int  USART2_Dequeue(char* c) {
 	}
 
 	HAL_NVIC_EnableIRQ(USART2_IRQn);
+	return  ret;
+}
+
+void  LPUART1_SendChar(uint8_t c) {
+	HAL_UART_Transmit (&hlpuart1 , &c, sizeof(c), 10);
+}
+
+int  LPUART1_Dequeue(char* c) {
+	int  ret;
+	ret = 0;
+	*c = 0;
+	HAL_NVIC_DisableIRQ(LPUART1_IRQn);
+
+	if (RX_BUFFER_HEAD_LP  !=  RX_BUFFER_TAIL_LP) {
+		*c = RX_BUFFER_LP[RX_BUFFER_TAIL_LP ];
+		RX_BUFFER_TAIL_LP ++;
+
+		if (RX_BUFFER_TAIL_LP  ==  BUFSIZE) {
+			RX_BUFFER_TAIL_LP = 0;
+		}
+
+		ret = 1;
+	}
+
+	HAL_NVIC_EnableIRQ(LPUART1_IRQn);
 	return  ret;
 }
 /* USER CODE END 1 */

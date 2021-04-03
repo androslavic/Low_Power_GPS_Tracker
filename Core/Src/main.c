@@ -10,6 +10,7 @@ int main(void)
 {
 
   char c;
+  int i;
 
   HAL_Init();
 
@@ -27,7 +28,12 @@ int main(void)
   {
 	  if (USART2_Dequeue (&c) != 0) {
 		  USART2_SendChar(c);
+		  LPUART1_SendChar(c);
 	  }
-  }
+	  if (LPUART1_Dequeue (&c) != 0) {
+		  LPUART1_SendChar(c);
+	  }  }
+
+
 }
 
