@@ -53,6 +53,7 @@ void MX_LPUART1_UART_Init(void)
     Error_Handler();
   }
   /* USER CODE BEGIN LPUART1_Init 2 */
+  __HAL_UART_ENABLE_IT (&hlpuart1 , UART_IT_RXNE);
 
   /* USER CODE END LPUART1_Init 2 */
 
