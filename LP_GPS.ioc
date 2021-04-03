@@ -18,6 +18,7 @@ ProjectManager.DefaultFWLocation=true
 RCC.USART2Freq_Value=2097000
 NVIC.SVC_IRQn=true\:0\:0\:false\:false\:true\:false\:false
 ProjectManager.DeletePrevious=true
+NVIC.USART2_IRQn=true\:0\:0\:false\:false\:true\:true\:true
 LPUART1.IPParameters=BaudRate,WordLength
 PinOutPanel.RotationAngle=0
 RCC.FamilyName=M

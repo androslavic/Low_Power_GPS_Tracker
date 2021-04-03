@@ -6,14 +6,12 @@
 #include "sysclk.h"
 
 
-
 int main(void)
 {
-
+/
   HAL_Init();
 
   SystemClock_Config();
-
 
   MX_GPIO_Init();
   MX_LPTIM1_Init();
@@ -24,12 +22,7 @@ int main(void)
 
   while (1)
   {
-
 	  i++;
   }
 }
-
-
-
-
 
