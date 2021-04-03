@@ -1,0 +1,2 @@
+sysclk.c:4:6:SystemClock_Config	112	static
+sysclk.c:51:6:Error_Handler	8	static,ignoring_inline_asm
