@@ -84,7 +84,7 @@ void MX_USART2_UART_Init(void)
     Error_Handler();
   }
   /* USER CODE BEGIN USART2_Init 2 */
-
+  __HAL_UART_ENABLE_IT (&huart2 , UART_IT_RXNE);
   /* USER CODE END USART2_Init 2 */
 
 }
@@ -195,7 +195,46 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
 }
 
 /* USER CODE BEGIN 1 */
+void  USER_UART_IRQHandler(UART_HandleTypeDef *huart) {
+	if( huart ->Instance  ==  USART2 ) {
+		rx_data = __HAL_UART_FLUSH_DRREGISTER(huart);
+		static  char  rx_head;
+		rx_head = RX_BUFFER_HEAD + 1;
+		if( rx_head  ==  BUFSIZE ) {
+			rx_head = 0;
+		}
+		if( rx_head  !=  RX_BUFFER_TAIL ) {
+			RX_BUFFER[RX_BUFFER_HEAD] = rx_data;
+			RX_BUFFER_HEAD = rx_head;
+		}
+	}
+}
 
+void  USART2_SendChar(uint8_t c) {
+	HAL_UART_Transmit (&huart2 , &c, sizeof(c), 10);
+}
+
+int  USART2_Dequeue(char* c) {
+	int  ret;
+	ret = 0;
+	*c = 0;
+	HAL_NVIC_DisableIRQ(USART2_IRQn);
+
+	if (RX_BUFFER_HEAD  !=  RX_BUFFER_TAIL) {
+		*c = RX_BUFFER[RX_BUFFER_TAIL ];
+		RX_BUFFER_TAIL ++;
+
+		if (RX_BUFFER_TAIL  ==  BUFSIZE) {
+			RX_BUFFER_TAIL = 0;
+		}
+
+		ret = 1;
+	}
+
+	HAL_NVIC_EnableIRQ(USART2_IRQn);
+	return  ret;
+}
 /* USER CODE END 1 */
+
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

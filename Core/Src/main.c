@@ -1,14 +1,16 @@
 
 #include "main.h"
-#include "lptim.h"
-#include "usart.h"
-#include "gpio.h"
-#include "sysclk.h"
+
+
+
+
 
 
 int main(void)
 {
-/
+
+  char c;
+
   HAL_Init();
 
   SystemClock_Config();
@@ -18,11 +20,14 @@ int main(void)
   MX_LPUART1_UART_Init();
   MX_USART2_UART_Init();
 
-  int i=0;
+
+
 
   while (1)
   {
-	  i++;
+	  if (USART2_Dequeue (&c) != 0) {
+		  USART2_SendChar(c);
+	  }
   }
 }
 

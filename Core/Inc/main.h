@@ -15,6 +15,7 @@
   * License. You may obtain a copy of the License at:
   *                        opensource.org/licenses/BSD-3-Clause
   *
+  ********************************
   ******************************************************************************
   */
 /* USER CODE END Header */
@@ -29,6 +30,10 @@ extern "C" {
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32l0xx_hal.h"
+#include "lptim.h"
+#include "usart.h"
+#include "gpio.h"
+#include "sysclk.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */

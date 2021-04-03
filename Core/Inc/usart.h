@@ -25,23 +25,30 @@ extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
-#include "main.h"
-
+#include "stm32l0xx_hal.h"
+#define     BUFSIZE  16
 /* USER CODE BEGIN Includes */
-
+char  RX_BUFFER[BUFSIZE];
+int  RX_BUFFER_HEAD , RX_BUFFER_TAIL;
+uint8_t  rx_data;
 /* USER CODE END Includes */
 
 extern UART_HandleTypeDef hlpuart1;
 extern UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN Private defines */
-
 /* USER CODE END Private defines */
 
 void MX_LPUART1_UART_Init(void);
 void MX_USART2_UART_Init(void);
 
 /* USER CODE BEGIN Prototypes */
+extern  char  RX_BUFFER[BUFSIZE];
+extern  int  RX_BUFFER_HEAD , RX_BUFFER_TAIL;
+void  USART2_SendChar(uint8_t c);
+int  USART2_Dequeue(char* c);
+void  USER_UART_IRQHandler(UART_HandleTypeDef *huart);
+void Error_Handler(void);
 
 /* USER CODE END Prototypes */
 
