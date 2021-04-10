@@ -22,22 +22,24 @@ int main(void)
   {
 	  if (USART2_Dequeue (&c) != 0) {
 
-	  	  USART2_SendChar(c);
-
+//	  	  LPUART1_SendChar(c);
+		  USART2_SendChar(c);
 		  print2string(buffer1,c);
 
-		  if (strstr(buffer1,"a1")) {strcpy(buffer1,"AT+CGPSSTATUS?\r\n");LPUART1_SendString(buffer1);}
-		  if (strstr(buffer1,"s1")) {strcpy(buffer1,"AT+CGPSPWR?\r\n"); LPUART1_SendString(buffer1);}
-		  if (strstr(buffer1,"d1")) {strcpy(buffer1,"AT+CGPSPWR=1\r\n"); LPUART1_SendString(buffer1);}
-		  if (strstr(buffer1,"f1")) {strcpy(buffer1,"AT+CGPSRST=0\r\n"); LPUART1_SendString(buffer1);}
-		  if (strstr(buffer1,"g1")) {strcpy(buffer1,"AT+CGPSSTATUS?\r\n"); LPUART1_SendString(buffer1);}
-		  if (strstr(buffer1,"h1")) {strcpy(buffer1,"AT+CGPSINF=2\r\n"); LPUART1_SendString(buffer1);}
+		  if (strstr(buffer1,"a1")) {strcpy(buffer1,"\r\nAT+CGPSSTATUS?\r\n");LPUART1_SendString(buffer1);}
+		  if (strstr(buffer1,"s1")) {strcpy(buffer1,"\r\nAT+CGPSPWR?\r\n"); LPUART1_SendString(buffer1);}
+		  if (strstr(buffer1,"d1")) {strcpy(buffer1,"\r\nAT+CGPSPWR=1\r\n"); LPUART1_SendString(buffer1);}
+		  if (strstr(buffer1,"f1")) {strcpy(buffer1,"\r\nAT+CGPSRST=0\r\n"); LPUART1_SendString(buffer1);}
+	 	  if (strstr(buffer1,"g1")) {strcpy(buffer1,"\r\nAT+CGPSSTATUS?\r\n"); LPUART1_SendString(buffer1);}
+		  if (strstr(buffer1,"h1")) {strcpy(buffer1,"\r\nAT+CGPSINF=2\r\n"); LPUART1_SendString(buffer1);}
 
 		  if (strchr(buffer1,'\r')) {LPUART1_SendString(buffer1);}
 
 	  }
 
 	  if (LPUART1_Dequeue (&c) != 0) {
+
+//	  	  USART2_SendChar(c);
 
 		  print2string(buffer2,c);
 

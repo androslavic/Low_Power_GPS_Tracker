@@ -29,8 +29,11 @@ extern "C" {
 #include "user.h"
 /* USER CODE BEGIN Includes */
 char  RX_BUFFER[BUFSIZE];
+char  RX_BUFFER_LP[BUFSIZE];
 int  RX_BUFFER_HEAD , RX_BUFFER_TAIL;
+int  RX_BUFFER_HEAD_LP , RX_BUFFER_TAIL_LP;
 uint8_t  rx_data;
+uint8_t  rx_data_lp;
 /* USER CODE END Includes */
 
 extern UART_HandleTypeDef hlpuart1;
@@ -49,6 +52,8 @@ extern  char  RX_BUFFER_LP[BUFSIZE];
 extern  int  RX_BUFFER_HEAD_LP , RX_BUFFER_TAIL_LP;
 void  USART2_SendChar(uint8_t c);
 int  USART2_Dequeue(char* c);
+void  LPUART1_SendChar(uint8_t c);
+int  LPUART1_Dequeue(char* c);
 void  USER_UART_IRQHandler(UART_HandleTypeDef *huart);
 void Error_Handler(void);
 void  LPUART1_SendString(char *c);
