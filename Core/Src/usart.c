@@ -198,7 +198,6 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
 /* USER CODE BEGIN 1 */
 void  USER_UART_IRQHandler(UART_HandleTypeDef *huart) {
 	if( huart ->Instance  ==  USART2 ) {
-		//HAL_UART_Receive(&huart2 , &rx_data, sizeof(rx_data), 10);
 		rx_data=__HAL_UART_FLUSH_DRREGISTER(huart);
 		static  char  rx_head;
 		rx_head = RX_BUFFER_HEAD + 1;
@@ -211,7 +210,6 @@ void  USER_UART_IRQHandler(UART_HandleTypeDef *huart) {
 		}
 	}
 	if( huart ->Instance  ==  LPUART1 ) {
-		//HAL_UART_Receive(&huart2 , &rx_data, sizeof(rx_data), 10);
 		rx_data_lp=__HAL_UART_FLUSH_DRREGISTER(huart);
 		static  char  rx_head_lp;
 		rx_head_lp = RX_BUFFER_HEAD_LP + 1;

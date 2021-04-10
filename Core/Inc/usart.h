@@ -32,8 +32,7 @@ char  RX_BUFFER[BUFSIZE];
 char  RX_BUFFER_LP[BUFSIZE];
 int  RX_BUFFER_HEAD , RX_BUFFER_TAIL;
 int  RX_BUFFER_HEAD_LP , RX_BUFFER_TAIL_LP;
-uint8_t  rx_data;
-uint8_t  rx_data_lp;
+uint8_t  rx_data,rx_data_lp;
 /* USER CODE END Includes */
 
 extern UART_HandleTypeDef hlpuart1;

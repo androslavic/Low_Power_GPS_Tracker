@@ -15,6 +15,14 @@ int main(void)
   init();
 
  // communication_test();
+  /* pri paljenju uređaja provjerimo da postoji komunikacija s sim808
+   * nakon toga sleep
+   * rutina se pali prilikom interrupta s sim808 (poruka/poziv)
+   * pali se antena AT+CGPSPWR=1
+   * cekamo status AT+CGPSSTATUS? svakih 30 sekundi
+   * (proizvoljno,treba mu par min da se pronađe)
+   * kad dobijemo odgovor 3D fix --> AT+CGPSINF=2
+   * dobivamo koordinate --> šalje se SMS*/
 
 
 
@@ -22,7 +30,7 @@ int main(void)
   {
 	  if (USART2_Dequeue (&c) != 0) {
 
-//	  	  LPUART1_SendChar(c);
+ //	  	  LPUART1_SendChar(c);
 		  USART2_SendChar(c);
 		  print2string(buffer1,c);
 
