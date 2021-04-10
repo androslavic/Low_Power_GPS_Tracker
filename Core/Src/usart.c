@@ -40,7 +40,7 @@ void MX_LPUART1_UART_Init(void)
 
   /* USER CODE END LPUART1_Init 1 */
   hlpuart1.Instance = LPUART1;
-  hlpuart1.Init.BaudRate = 115200;
+  hlpuart1.Init.BaudRate = 9600;
   hlpuart1.Init.WordLength = UART_WORDLENGTH_8B;
   hlpuart1.Init.StopBits = UART_STOPBITS_1;
   hlpuart1.Init.Parity = UART_PARITY_NONE;
@@ -71,7 +71,7 @@ void MX_USART2_UART_Init(void)
 
   /* USER CODE END USART2_Init 1 */
   huart2.Instance = USART2;
-  huart2.Init.BaudRate = 115200;
+  huart2.Init.BaudRate = 9600;
   huart2.Init.WordLength = UART_WORDLENGTH_8B;
   huart2.Init.StopBits = UART_STOPBITS_1;
   huart2.Init.Parity = UART_PARITY_NONE;
@@ -250,6 +250,17 @@ int  USART2_Dequeue(char* c) {
 void  LPUART1_SendChar(uint8_t c) {
 	HAL_UART_Transmit (&hlpuart1 , &c, sizeof(c), 10);
 }
+
+void  LPUART1_SendString(char *c) {
+	HAL_UART_Transmit (&hlpuart1 , (uint8_t*) c, 10*sizeof(c), 50);
+	cleanBuffer(c);
+}
+
+void  USART2_SendString(char *c) {
+	HAL_UART_Transmit (&huart2 , (uint8_t*) c, 10*sizeof(c), 50);
+	cleanBuffer(c);
+}
+
 
 int  LPUART1_Dequeue(char* c) {
 	int  ret;
