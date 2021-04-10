@@ -34,7 +34,13 @@ extern "C" {
 #include "usart.h"
 #include "gpio.h"
 #include "sysclk.h"
-
+#include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include "communication.h"
+#include "init.h"
+#include "commands.h"
+#include "user.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
