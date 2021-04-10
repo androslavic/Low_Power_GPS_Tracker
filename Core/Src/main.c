@@ -47,7 +47,7 @@ int main(void)
 	  if (LPUART1_Dequeue (&c) != 0) {
 
 		  print2string(buffer2,c);
-<<<<<<< HEAD
+
 
 		  if (strchr(buffer2,'\n')){
 
@@ -57,15 +57,4 @@ int main(void)
   }
 
 
-=======
-
-		  if (strchr(buffer2,'\n') != NULL){
-
-			  USART2_SendString(buffer2);
-		  	  }
-	  }
-  }
-
-
->>>>>>> 6cf1101c5d96b73d36d5d0c07d5a66f0890b0ef9
 }
