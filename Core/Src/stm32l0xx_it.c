@@ -153,6 +153,7 @@ void LPTIM1_IRQHandler(void)
   /* USER CODE END LPTIM1_IRQn 0 */
   HAL_LPTIM_IRQHandler(&hlptim1);
   /* USER CODE BEGIN LPTIM1_IRQn 1 */
+  USER_LPTIM_IRQHandler(&hlptim1);
 
   /* USER CODE END LPTIM1_IRQn 1 */
 }
