@@ -28,7 +28,11 @@ extern "C" {
 #include "main.h"
 
 /* USER CODE BEGIN Includes */
+/* Set the Maximum value of the counter (Auto-Reload) that defines the Period */
+#define Period               (uint32_t) 65535
 
+/* Set the Timeout value */
+#define Timeout              (uint32_t) (32768 - 1)
 /* USER CODE END Includes */
 
 extern LPTIM_HandleTypeDef hlptim1;
@@ -38,6 +42,7 @@ extern LPTIM_HandleTypeDef hlptim1;
 /* USER CODE END Private defines */
 
 void MX_LPTIM1_Init(void);
+void USER_LPTIM_IRQHandler (LPTIM_HandleTypeDef *hlptim);
 
 /* USER CODE BEGIN Prototypes */
 

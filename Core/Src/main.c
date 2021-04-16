@@ -7,12 +7,19 @@
 
 int main(void)
 {
-
+	int cnt=0;
   char c=0,i=0;
   char buffer1[BUFSIZE]={'\0'};
   char buffer2[BUFSIZE]= {'\0'};
 
   init();
+
+//  if (HAL_LPTIM_TimeOut_Start_IT(&hlptim1, Period, Timeout) != HAL_OK)
+	HAL_LPTIM_TimeOut_Start_IT(&hlptim1, 36999, 1000);
+
+
+  /* ### - 4 - Enter in Stop mode ########################################### */
+  //HAL_PWR_EnterSTOPMode(PWR_LOWPOWERREGULATOR_ON, PWR_STOPENTRY_WFI);
 
  // communication_test();
   /* pri paljenju uređaja provjerimo da postoji komunikacija s sim808
@@ -28,6 +35,9 @@ int main(void)
 
   while (1)
   {
+
+
+
 	  if (USART2_Dequeue (&c) != 0) {
 
  //	  	  LPUART1_SendChar(c);
