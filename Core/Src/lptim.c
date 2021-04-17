@@ -39,7 +39,7 @@ void MX_LPTIM1_Init(void)
   /* USER CODE END LPTIM1_Init 1 */
   hlptim1.Instance = LPTIM1;
   hlptim1.Init.Clock.Source = LPTIM_CLOCKSOURCE_APBCLOCK_LPOSC;
-  hlptim1.Init.Clock.Prescaler = LPTIM_PRESCALER_DIV8;
+  hlptim1.Init.Clock.Prescaler = LPTIM_PRESCALER_DIV128;
   hlptim1.Init.Trigger.Source = LPTIM_TRIGSOURCE_SOFTWARE;
   hlptim1.Init.OutputPolarity = LPTIM_OUTPUTPOLARITY_HIGH;
   hlptim1.Init.UpdateMode = LPTIM_UPDATE_IMMEDIATE;
@@ -49,7 +49,7 @@ void MX_LPTIM1_Init(void)
     Error_Handler();
   }
   /* USER CODE BEGIN LPTIM1_Init 2 */
-
+  timerFlag=0;
   /* USER CODE END LPTIM1_Init 2 */
 
 }
@@ -96,10 +96,18 @@ void HAL_LPTIM_MspDeInit(LPTIM_HandleTypeDef* lptimHandle)
 /* USER CODE BEGIN 1 */
 void USER_LPTIM_IRQHandler (LPTIM_HandleTypeDef *hlptim) {
 
-
+	static int i=0;
 	//todo: check SMS status every cycle
 	//if sms is recieved, set a flag
-	  BSP_LED_Toggle(LED3);
+
+	i++;
+
+	if (i%4==0) BSP_LED_Toggle(LED3);
+
+
+
+	  if (timerFlag==1) timerFlag=0; else timerFlag=1;
+
 
 
 }
