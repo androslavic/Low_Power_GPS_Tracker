@@ -93,20 +93,31 @@ void HAL_LPTIM_MspDeInit(LPTIM_HandleTypeDef* lptimHandle)
   }
 }
 
+
+void flag_Toggle(int *flag){
+
+	if (*flag==1) *flag=0; else *flag=1;
+
+
+}
+
 /* USER CODE BEGIN 1 */
 void USER_LPTIM_IRQHandler (LPTIM_HandleTypeDef *hlptim) {
 
-	static int i=0;
+	static int i=1;
 	//todo: check SMS status every cycle
 	//if sms is recieved, set a flag
 
 	i++;
 
-	if (i%4==0) BSP_LED_Toggle(LED3);
+	if (i%1==0) {
+		BSP_LED_Toggle(LED3);
+		flag_Toggle(&timerFlag);
+	}
 
+	if (i%20==0)
+		timeout=0;
 
-
-	  if (timerFlag==1) timerFlag=0; else timerFlag=1;
 
 
 

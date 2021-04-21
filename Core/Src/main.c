@@ -7,10 +7,11 @@
 
 int main(void)
 {
-	int cnt=0;
+	int cnt=1;
   char c=0,i=0;
   char buffer1[BUFSIZE]={'\0'};
   char buffer2[BUFSIZE]= {'\0'};
+
 
   init();
 
@@ -21,7 +22,7 @@ int main(void)
   /* ### - 4 - Enter in Stop mode ########################################### */
   //HAL_PWR_EnterSTOPMode(PWR_LOWPOWERREGULATOR_ON, PWR_STOPENTRY_WFI);
 
- // communication_test();
+  communication_test();
   /* pri paljenju uređaja provjerimo da postoji komunikacija s sim808
    * nakon toga sleep
    * rutina se pali prilikom interrupta s sim808 (poruka/poziv)
@@ -31,10 +32,12 @@ int main(void)
    * kad dobijemo odgovor 3D fix --> AT+CGPSINF=2
    * dobivamo koordinate --> šalje se SMS*/
 
+  USART2_SendString("xx");
 
 
   while (1)
   {
+
 
 
 

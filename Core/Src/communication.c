@@ -1,5 +1,6 @@
 #include "communication.h"
 
+int timeout=1;
 
 
 void communication_test(void){
@@ -14,13 +15,21 @@ void communication_test(void){
 
 	  HAL_Delay(1000);
 
-	  while (d!='\n')
+	  while (timeout==1)
 	  {
 		  	if(LPUART1_Dequeue (&d) != 0) {
 
-		  		USART2_SendChar(d);
 
-		  	}
+			  print2string(string,d);
+
+			  if (strchr(string,'K')){
+
+				  USART2_SendString(string);
+				  USART2_SendString("!!");
+				  timeout=0;
+			  }
+
+
 	  }
 	  HAL_Delay(1000);
 
@@ -55,4 +64,6 @@ void communication_test(void){
 	else
 	USART2_SendString ("communication not OK!\r\n");
 	*/
+
+	  }
 }
