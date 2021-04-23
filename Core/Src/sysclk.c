@@ -48,10 +48,18 @@ void SystemClock_Config(void)
 }
 
 
-void Error_Handler(void)
-{
-  __disable_irq();
-  while (1)
-  {
-  }
+
+void Error_Handler(void){
+
+	__NVIC_SystemReset();
 }
+
+
+//void Error_Handler(void)
+//{
+//  __disable_irq();
+//
+//  while (1)
+//  {
+//  }
+//}
