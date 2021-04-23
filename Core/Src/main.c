@@ -7,12 +7,14 @@
 
 int main(void)
 {
-	int cnt=0;
-  char c=0,i=0;
+  char c=0,i;
   char buffer1[BUFSIZE]={'\0'};
   char buffer2[BUFSIZE]= {'\0'};
 
+
   init();
+
+  HAL_Delay(2000);
 
 //  if (HAL_LPTIM_TimeOut_Start_IT(&hlptim1, Period, Timeout) != HAL_OK)
 	HAL_LPTIM_TimeOut_Start_IT(&hlptim1, 36999, 1000);
@@ -21,7 +23,7 @@ int main(void)
   /* ### - 4 - Enter in Stop mode ########################################### */
   //HAL_PWR_EnterSTOPMode(PWR_LOWPOWERREGULATOR_ON, PWR_STOPENTRY_WFI);
 
- // communication_test();
+  //communication_test();
   /* pri paljenju uređaja provjerimo da postoji komunikacija s sim808
    * nakon toga sleep
    * rutina se pali prilikom interrupta s sim808 (poruka/poziv)
@@ -31,6 +33,7 @@ int main(void)
    * kad dobijemo odgovor 3D fix --> AT+CGPSINF=2
    * dobivamo koordinate --> šalje se SMS*/
 
+  USART2_SendString("Debug: Start while(1) \r\n");
 
 
   while (1)
@@ -38,35 +41,28 @@ int main(void)
 
 
 
+
 	  if (USART2_Dequeue (&c) != 0) {
 
- //	  	  LPUART1_SendChar(c);
 		  USART2_SendChar(c);
 		  print2string(buffer1,c);
+		  sendCommand(buffer1);
 
-		  if (strstr(buffer1,"a1")) {strcpy(buffer1,"\r\nAT+CGPSSTATUS?\r\n");LPUART1_SendString(buffer1);}
-		  if (strstr(buffer1,"s1")) {strcpy(buffer1,"\r\nAT+CGPSPWR?\r\n"); LPUART1_SendString(buffer1);}
-		  if (strstr(buffer1,"d1")) {strcpy(buffer1,"\r\nAT+CGPSPWR=1\r\n"); LPUART1_SendString(buffer1);}
-		  if (strstr(buffer1,"f1")) {strcpy(buffer1,"\r\nAT+CGPSRST=0\r\n"); LPUART1_SendString(buffer1);}
-	 	  if (strstr(buffer1,"g1")) {strcpy(buffer1,"\r\nAT+CGPSSTATUS?\r\n"); LPUART1_SendString(buffer1);}
-		  if (strstr(buffer1,"h1")) {strcpy(buffer1,"\r\nAT+CGPSINF=2\r\n"); LPUART1_SendString(buffer1);}
-
-		  if (strchr(buffer1,'\r')) {LPUART1_SendString(buffer1);}
 
 	  }
+
+
 
 	  if (LPUART1_Dequeue (&c) != 0) {
 
-//	  	  USART2_SendChar(c);
 
 		  print2string(buffer2,c);
+		  processMessage(buffer2);
 
-		  if (strchr(buffer2,'\n')){
-
-			  USART2_SendString(buffer2);
-		  	  }
-	  }
+		  }
   }
-
-
 }
+
+
+
+

@@ -12,4 +12,5 @@ void init (void) {
 	  MX_USART2_UART_Init();
 	  BSP_LED_Init(LED3);
 
+
 }
