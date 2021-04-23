@@ -7,6 +7,7 @@
 #include "usart.h"
 #include "gpio.h"
 #include "sysclk.h"
+#include "user.h"
 
 #endif
 
