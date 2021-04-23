@@ -14,7 +14,7 @@ int main(void)
 
   init();
 
-  HAL_Delay(2000);
+  HAL_Delay(1000);
 
 //  if (HAL_LPTIM_TimeOut_Start_IT(&hlptim1, Period, Timeout) != HAL_OK)
 	HAL_LPTIM_TimeOut_Start_IT(&hlptim1, 36999, 1000);
@@ -34,6 +34,7 @@ int main(void)
    * dobivamo koordinate --> šalje se SMS*/
 
   USART2_SendString("Debug: Start while(1) \r\n");
+  HAL_Delay(1000);
 
 
   while (1)

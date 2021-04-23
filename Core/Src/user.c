@@ -47,6 +47,7 @@ void processMessage(char *str){
 
 	  if (strstr(str,"OK")) {
 		  USART2_SendString(str);
+		  USART2_SendString("\r\n");
 	  }
 
 
