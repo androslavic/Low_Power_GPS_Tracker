@@ -7,9 +7,9 @@
 
 int main(void)
 {
-  char c=0,i;
   char buffer1[BUFSIZE]={'\0'};
   char buffer2[BUFSIZE]= {'\0'};
+  SMS=0;
 
   	init();
 
@@ -60,28 +60,12 @@ int main(void)
 
   while (1)
   {
+	  USART2_handler(buffer1);
+	  LPUART_handler(buffer2);
 
+	  //todo: check SMS
+	  checkSMS();
 
-
-
-	  if (USART2_Dequeue (&c) != 0) {
-
-		  USART2_SendChar(c);
-		  print2string(buffer1,c);
-		  sendCommand(buffer1);
-
-
-	  }
-
-
-
-	  if (LPUART1_Dequeue (&c) != 0) {
-
-
-		  print2string(buffer2,c);
-		  processMessage(buffer2);
-
-		  }
   }
 }
 

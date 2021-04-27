@@ -30,6 +30,13 @@ void print2string (char *str, char c){
 void processMessage(char *str){
 
 
+		//todo: implement action for not fix,2d fix,3d fix
+	  if (strstr(str,"CGPSSTATUS:") && 0) {
+		  USART2_SendString(str);
+		  USART2_SendString("\r\n");
+	  }
+
+
 
 	  if (strstr(str,"OK")) {
 		  USART2_SendString(str);
@@ -45,7 +52,7 @@ void sendCommand (char *str){
 
 
 	  // location status
-	  if (strstr(str,"aaps")) {strcpy(str,"\r\nAT+CGPSSTATUS?\r\n");LPUART1_SendString(str);}
+	  if (strstr(str,"aags")) {strcpy(str,"\r\nAT+CGPSSTATUS?\r\n");LPUART1_SendString(str);}
 
 	  // power status (on / off)
 	  if (strstr(str,"aap?")) {strcpy(str,"\r\nAT+CGPSPWR?\r\n"); LPUART1_SendString(str);}
@@ -72,3 +79,77 @@ void sendCommand (char *str){
 
 
 }
+
+
+void USART2_handler(char *str){
+
+	char c=0;
+
+	if (USART2_Dequeue (&c) != 0) {
+
+		  USART2_SendChar(c);
+		  print2string(str,c);
+		  sendCommand(str);
+	}
+}
+
+
+void LPUART_handler(char *str){
+
+	char c=0;
+
+	if (LPUART1_Dequeue (&c) != 0) {
+
+		print2string(str,c);
+		processMessage(str);
+	  }
+}
+
+
+void checkSMS(void){
+
+//	todo: connect SMS variable to SMS info / interrupt
+	static int state=0;
+	char buffer[100]={'\0'};
+	char str[100]={'\0'};
+
+
+	if (SMS==1){
+		//clear SMS flag
+		SMS=0;
+		//start routine
+		state=0;
+
+	}
+
+	//todo: read SMS to buffer
+	strcpy(buffer,"GPS");
+
+
+	if(strstr(buffer,"GPS")){
+
+		switch (state){
+
+		case 0:
+			//sendCommand("aagp1");
+			strcpy(str,"\r\nAT+CGPSPWR=1\r\n");
+			LPUART1_SendString(str);
+			strcpy(str, "");
+			state++;
+			break;
+
+		case 1:
+			strcpy(str,"\r\nAT+CGPSRST=0\r\n");
+			LPUART1_SendString(str);
+			strcpy(str, "");
+			//sendCommand("aagr1");
+			state++;
+			break;
+		}
+
+
+	}
+
+
+}
+
