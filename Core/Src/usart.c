@@ -282,6 +282,7 @@ void  USART2_Debug(char *c) {
 		USART2_SendString("Debug: ");
 		USART2_SendString(c);
 		HAL_Delay(500);
+
 	}
 }
 

@@ -35,6 +35,7 @@ int main(void)
 	HAL_SuspendTick();
 
 	USART2_Debug("Enter SLEEP in 500ms \r\n");
+
 	HAL_PWR_EnterSLEEPMode(PWR_MAINREGULATOR_ON, PWR_SLEEPENTRY_WFI);
 
 
