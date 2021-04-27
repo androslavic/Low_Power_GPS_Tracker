@@ -1,7 +1,7 @@
 #include "communication.h"
 
+int debug=1;
 int timeout=1;
-
 
 void communication_test(void){
 
@@ -22,10 +22,8 @@ void communication_test(void){
 
 			  print2string(string,d);
 
-			  if (strchr(string,'K')){
-
-				  USART2_SendString(string);
-				  USART2_SendString("!!");
+			  if (strstr(string,"OK")){
+				  USART2_Debug("Communication test OK.\r\n");
 				  timeout=0;
 			  }
 

@@ -115,9 +115,10 @@ void USER_LPTIM_IRQHandler (LPTIM_HandleTypeDef *hlptim) {
 		flag_Toggle(&timerFlag);
 	}
 
-	if (i%20==0)
+	if (i%10==0){
 		timeout=0;
-
+		SMS=1;
+	}
 
 
 

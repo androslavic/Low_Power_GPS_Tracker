@@ -7,23 +7,20 @@
 
 int main(void)
 {
-  char c=0,i;
   char buffer1[BUFSIZE]={'\0'};
   char buffer2[BUFSIZE]= {'\0'};
+  SMS=0;
 
+  	init();
 
-  init();
-
-  HAL_Delay(1000);
+  	HAL_Delay(1000);
 
 //  if (HAL_LPTIM_TimeOut_Start_IT(&hlptim1, Period, Timeout) != HAL_OK)
 	HAL_LPTIM_TimeOut_Start_IT(&hlptim1, 36999, 1000);
 
 
-  /* ### - 4 - Enter in Stop mode ########################################### */
-  //HAL_PWR_EnterSTOPMode(PWR_LOWPOWERREGULATOR_ON, PWR_STOPENTRY_WFI);
 
-  //communication_test();
+  communication_test();
   /* pri paljenju uređaja provjerimo da postoji komunikacija s sim808
    * nakon toga sleep
    * rutina se pali prilikom interrupta s sim808 (poruka/poziv)
@@ -33,34 +30,36 @@ int main(void)
    * kad dobijemo odgovor 3D fix --> AT+CGPSINF=2
    * dobivamo koordinate --> šalje se SMS*/
 
-  USART2_SendString("Debug: Start while(1) \r\n");
-  HAL_Delay(1000);
+
+  	USART2_Debug("Suspend tick in 500ms \r\n");
+	HAL_Delay(500);
+	HAL_SuspendTick();
+
+	USART2_Debug("Enter SLEEP in 500ms \r\n");
+	HAL_Delay(500);
+	HAL_PWR_EnterSLEEPMode(PWR_MAINREGULATOR_ON, PWR_SLEEPENTRY_WFI);
+
+
+	//USART2_SendString("Debug: enter STOP in 500ms \r\n");
+	//HAL_Delay(500);
+	//HAL_PWR_EnterSTOPMode(PWR_LOWPOWERREGULATOR_ON, PWR_STOPENTRY_WFI);
+	//	STOP mode se ne budi?
+
+
+
+
+	USART2_Debug("Start while(1) \r\n");
+	HAL_Delay(1000);
 
 
   while (1)
   {
+	  USART2_handler(buffer1);
+	  LPUART_handler(buffer2);
 
+	  //todo: check SMS
+	  checkSMS();
 
-
-
-	  if (USART2_Dequeue (&c) != 0) {
-
-		  USART2_SendChar(c);
-		  print2string(buffer1,c);
-		  sendCommand(buffer1);
-
-
-	  }
-
-
-
-	  if (LPUART1_Dequeue (&c) != 0) {
-
-
-		  print2string(buffer2,c);
-		  processMessage(buffer2);
-
-		  }
   }
 }
 

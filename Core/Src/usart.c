@@ -197,6 +197,11 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
 
 /* USER CODE BEGIN 1 */
 void  USER_UART_IRQHandler(UART_HandleTypeDef *huart) {
+
+
+//at	SystemClock_Config ();
+	HAL_ResumeTick();
+
 	if( huart ->Instance  ==  USART2 ) {
 		rx_data=__HAL_UART_FLUSH_DRREGISTER(huart);
 		static  char  rx_head;
@@ -262,12 +267,22 @@ void  LPUART1_SendString(char *c) {
 }
 
 void  USART2_SendString(char *c) {
+
 	uint8_t i=0;
 	do{
 	HAL_UART_Transmit (&huart2 ,(uint8_t*) &c[i], sizeof(i), 50);
 	c[i]=0;
 	i++;
-	}while (c[i]!=0);}
+	}while (c[i]!=0);
+}
+
+void  USART2_Debug(char *c) {
+
+	if (debug){
+		USART2_SendString("Debug: ");
+		USART2_SendString(c);
+	}
+}
 
 
 int  LPUART1_Dequeue(char* c) {
@@ -290,6 +305,9 @@ int  LPUART1_Dequeue(char* c) {
 	HAL_NVIC_EnableIRQ(LPUART1_IRQn);
 	return  ret;
 }
+
+
+
 /* USER CODE END 1 */
 
 
