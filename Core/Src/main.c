@@ -32,11 +32,10 @@ int main(void)
 
 
   	USART2_Debug("Suspend tick in 500ms \r\n");
-	HAL_Delay(500);
 	HAL_SuspendTick();
 
 	USART2_Debug("Enter SLEEP in 500ms \r\n");
-	HAL_Delay(500);
+
 	HAL_PWR_EnterSLEEPMode(PWR_MAINREGULATOR_ON, PWR_SLEEPENTRY_WFI);
 
 
@@ -49,7 +48,6 @@ int main(void)
 
 
 	USART2_Debug("Start while(1) \r\n");
-	HAL_Delay(1000);
 
 
   while (1)
