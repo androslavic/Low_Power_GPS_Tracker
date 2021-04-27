@@ -57,6 +57,8 @@ void  USER_UART_IRQHandler(UART_HandleTypeDef *huart);
 void Error_Handler(void);
 void  LPUART1_SendString(char *c);
 void  USART2_SendString(char *c);
+void  USART2_Debug(char *c);
+
 
 /* USER CODE END Prototypes */
 

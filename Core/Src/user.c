@@ -123,7 +123,7 @@ void checkSMS(void){
 	}
 
 	//todo: read SMS to buffer
-	strcpy(buffer,"GPS");
+	strcpy(buffer,"GPx");
 
 
 	if(strstr(buffer,"GPS")){
@@ -145,6 +145,10 @@ void checkSMS(void){
 			//sendCommand("aagr1");
 			state++;
 			break;
+
+		default:
+		strcpy(buffer,"");
+
 		}
 
 

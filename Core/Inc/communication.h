@@ -11,5 +11,10 @@
 
 void  communication_test(void);
 
-
 extern int timeout;
+extern int debug;
+
+
+
+
+
