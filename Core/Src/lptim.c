@@ -49,6 +49,7 @@ void MX_LPTIM1_Init(void)
     Error_Handler();
   }
   /* USER CODE BEGIN LPTIM1_Init 2 */
+  if (HAL_LPTIM_TimeOut_Start_IT(&hlptim1, Period, Timeout) != HAL_OK) Error_Handler();
   timerFlag=0;
   /* USER CODE END LPTIM1_Init 2 */
 
@@ -115,7 +116,7 @@ void USER_LPTIM_IRQHandler (LPTIM_HandleTypeDef *hlptim) {
 		flag_Toggle(&timerFlag);
 	}
 
-	if (i%10==0){
+	if (i%100==0){
 		timeout=0;
 		SMS=1;
 	}

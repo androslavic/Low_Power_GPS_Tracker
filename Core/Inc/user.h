@@ -15,13 +15,6 @@ void processMessage(char *str);
 
 void sendCommand (char *str);
 
-
-void USART2_handler(char *str);
-
-
-void LPUART_handler(char *str);
-
-
 void checkSMS(void);
 
 int SMS;

@@ -10,10 +10,9 @@ void communication_test(void){
 	//todo timeout implementation
 
 
-	  strcpy(string,"AT\r\n");
-	  LPUART1_SendString(string);
+	  LPUART1_SendString("AT\r\n");
 
-	  HAL_Delay(1000);
+	  HAL_Delay(500);
 
 	  while (timeout==1)
 	  {

@@ -58,6 +58,8 @@ void Error_Handler(void);
 void  LPUART1_SendString(char *c);
 void  USART2_SendString(char *c);
 void  USART2_Debug(char *c);
+void LPUART_handler(char *str);
+void USART2_handler(char *str);
 
 
 /* USER CODE END Prototypes */
