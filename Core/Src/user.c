@@ -31,20 +31,6 @@ void processMessage(char *str){
 
 
 
-	  if (strstr(str,"+CGPSPWR")) {
-
-		  USART2_SendString("POWER");
-
-		  USART2_SendString(str);
-	  }
-
-	  if (strstr(str,"+CBC")) {
-
-		  USART2_SendString("BATERIJA");
-
-		  USART2_SendString(str);
-	  }
-
 	  if (strstr(str,"OK")) {
 		  USART2_SendString(str);
 		  USART2_SendString("\r\n");

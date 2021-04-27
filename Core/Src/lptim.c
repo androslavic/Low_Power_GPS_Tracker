@@ -115,9 +115,9 @@ void USER_LPTIM_IRQHandler (LPTIM_HandleTypeDef *hlptim) {
 		flag_Toggle(&timerFlag);
 	}
 
-	if (i%20==0)
+	if (i%20==0){
 		timeout=0;
-
+	}
 
 
 
