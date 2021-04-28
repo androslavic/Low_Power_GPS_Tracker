@@ -33,6 +33,9 @@ void processMessage(char *str){
 		//todo: implement action for not fix,2d fix,3d fix
 	  if (strstr(str,"CGPSSTATUS")) {
 		  USART2_SendString(str);
+
+		  // citam CGPSSTATUS dok nije 3d fix
+		  // 3dfix--> pozivam novu funkciju sendCommand("aalocation");
 		  USART2_SendString(" debug pm1\r\n");
 	  }
 
@@ -44,6 +47,24 @@ void processMessage(char *str){
 	  if (strstr(str,"CGPSRST")) {
 		  USART2_SendString(str);
 		  USART2_SendString(" debug pm3\r\n");
+	  }
+
+	  // todo: provjeri tocno poruku i testiraj
+	  if (strstr(str,"LOW POWER")) {
+		  USART2_SendString(str);
+		  sendCommand("aaLowPower");
+		  USART2_SendString(" debug pm3\r\n");
+	  }
+
+	  //dummy implemetacija
+	  if (strstr(str,"SMS-lalallala")) {
+		  USART2_SendString(str);
+		  //procitaj sms
+		  //if (sms==gps)
+		  // pali power
+		  // warm reset
+		  // loop sa CGPSSTATUS  .....to ide ova prva funkcija
+		  USART2_SendString(" debug pm1\r\n");
 	  }
 
 	  if (strstr(str,"OK")) {
@@ -61,6 +82,14 @@ void sendCommand (char *str){
 	  if (strstr(str,"aass0")) {SMS=0;}
 	  if (strstr(str,"aass1")) {SMS=1;}
 	  if (strstr(str,"aass2")) {SMS=2;}
+
+	  if (strstr(str,"aasss")) {
+		  USART2_Debug("Suspend tick in 500ms \r\n");
+		  HAL_SuspendTick();
+
+		  memset(str,0,strlen(str));
+		  HAL_PWR_EnterSLEEPMode(PWR_MAINREGULATOR_ON, PWR_SLEEPENTRY_WFI);
+	  	  }
 
 	  // location status
 	  if (strstr(str,"aags")) {strcpy(str,"\r\nAT+CGPSSTATUS?\r\n");LPUART1_SendString(str);}
@@ -85,6 +114,20 @@ void sendCommand (char *str){
 
 	  // battery status
 	  if (strstr(str,"aabs")) {strcpy(str,"\r\nAT+CBC\r\n"); LPUART1_SendString(str);}
+
+
+	  if (strstr(str,"aalocation")) {
+		  strcpy(str,"\r\n......\r\n"); LPUART1_SendString(str);
+		  strcpy(str,"\r\n......\r\n"); LPUART1_SendString(str);
+		  strcpy(str,"\r\n......\r\n"); LPUART1_SendString(str);
+	  }
+
+	  if (strstr(str,"aaLowPower")) {
+		  strcpy(str,"\r\n......\r\n"); LPUART1_SendString(str);
+		  strcpy(str,"\r\n......\r\n"); LPUART1_SendString(str);
+		  strcpy(str,"\r\n......\r\n"); LPUART1_SendString(str);
+	  }
+
 
 	  if (strchr(str,'\r')) {LPUART1_SendString(str);}
 

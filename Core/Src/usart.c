@@ -224,7 +224,10 @@ void  USER_UART_IRQHandler(UART_HandleTypeDef *huart) {
 			RX_BUFFER_LP[RX_BUFFER_HEAD_LP] = rx_data_lp;
 			RX_BUFFER_HEAD_LP = rx_head_lp;
 		}
-	}}
+	}
+
+	HAL_PWR_DisableSleepOnExit();
+}
 
 void  USART2_SendChar(uint8_t c) {
 	HAL_UART_Transmit (&huart2 , &c, sizeof(c), 10);
