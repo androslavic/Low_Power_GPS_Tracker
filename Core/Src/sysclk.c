@@ -51,6 +51,8 @@ void SystemClock_Config(void)
 
 void Error_Handler(void){
 
+	USART2_Debug("Error handler! System reset in 500ms \r\n");
+
 	__NVIC_SystemReset();
 }
 
