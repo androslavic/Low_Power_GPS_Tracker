@@ -24,6 +24,9 @@ void communication_test(void){
 			  if (strstr(string,"OK")){
 				  USART2_Debug("Communication test OK.\r\n");
 				  timeout=0;
+
+				  //todo: pošalji cold reset
+
 			  }
 
 

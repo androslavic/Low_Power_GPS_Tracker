@@ -25,8 +25,8 @@ extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
-#include "stm32l0xx_hal.h"
-#include "user.h"
+#include "main.h"
+
 /* USER CODE BEGIN Includes */
 char  RX_BUFFER[BUFSIZE];
 char  RX_BUFFER_LP[BUFSIZE];

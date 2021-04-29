@@ -44,12 +44,13 @@ extern LPTIM_HandleTypeDef hlptim1;
 /* USER CODE END Private defines */
 
 void MX_LPTIM1_Init(void);
-void USER_LPTIM_IRQHandler (LPTIM_HandleTypeDef *hlptim);
-void flag_Toggle (int *flag);
+
 
 /* USER CODE BEGIN Prototypes */
 extern int timerFlag;
 extern int timeout;
+void USER_LPTIM_IRQHandler (LPTIM_HandleTypeDef *hlptim);
+void flag_Toggle (int *flag);
 /* USER CODE END Prototypes */
 
 #ifdef __cplusplus

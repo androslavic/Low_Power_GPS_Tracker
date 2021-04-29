@@ -95,6 +95,8 @@ void HAL_LPTIM_MspDeInit(LPTIM_HandleTypeDef* lptimHandle)
 }
 
 
+/* USER CODE BEGIN 1 */
+
 void flag_Toggle(int *flag){
 
 	if (*flag==1) *flag=0; else *flag=1;
@@ -102,7 +104,7 @@ void flag_Toggle(int *flag){
 
 }
 
-/* USER CODE BEGIN 1 */
+
 void USER_LPTIM_IRQHandler (LPTIM_HandleTypeDef *hlptim) {
 
 	static int i=1;
