@@ -47,9 +47,9 @@ int main(void)
 		  USART2_handler(buffer1);
 	  }
 
-	  if (i%1000==0)
-		BSP_LED_Toggle(LED3);
-	  i++;
+//	  if (i%1000==0)
+//		BSP_LED_Toggle(LED3);
+//	  i++;
 
   }
 }
