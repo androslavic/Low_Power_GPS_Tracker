@@ -1,12 +1,56 @@
 #include "user.h"
 
 
+void setLocationFlag(int *locationFlag){
+
+	*locationFlag=1;
+}
+
+void checkLocation(int *locationFlag, char *str){
+
+	  char * token;
+	  char * string;
+
+	if (*locationFlag){
+
+		USART2_Debug("Location flag! \r\n");
+
+		token = strtok (str," ,.-");
+		  while (token != NULL)
+		  {
+		    string=token;
+			USART2_SendString(string);
+			USART2_SendString("\r\n");
+		    token = strtok (NULL, " ,.-");
+		  }
+		USART2_Debug("Location flag! \r\n");
+
+		*locationFlag=0;
+	}
+}
+
+
 void cleanBuffer(char *buffer){
 
 	int i;
     for(i=0;i<BUFSIZE;i++){
     	buffer[i]= 0;
     }
+
+}
+
+void parseLocation (void){
+
+	char c=0;
+	char *str="";
+
+	HAL_Delay(50);
+	if (LPUART1_Dequeue (&c) != 0) {
+		USART2_SendChar(c);
+		print2string(str,c);
+		HAL_Delay(10);
+	}
+
 
 }
 
@@ -30,30 +74,45 @@ void print2string (char *str, char c){
 void processMessage(char *str){
 
 
+	static int locationFlag=0;
+
+	 char *buffer={'\0'};
 		//todo: implement action for not fix,2d fix,3d fix
 	  if (strstr(str,"CGPSSTATUS")) {
+
+		  if (strstr(str,"Not Fix"))
+			  loc=1;
+		  if (strstr(str,"2D Fix"))
+			  loc=2;
+		  if (strstr(str,"3D Fix"))
+			  loc=3;
+
 		  USART2_SendString(str);
 
 		  // citam CGPSSTATUS dok nije 3d fix
 		  // 3dfix--> pozivam novu funkciju sendCommand("aalocation");
-		  USART2_SendString(" debug pm1\r\n");
 	  }
 
 	  if (strstr(str,"CGPSPWR")) {
 		  USART2_SendString(str);
-		  USART2_SendString(" debug pm2\r\n");
 	  }
 
 	  if (strstr(str,"CGPSRST")) {
 		  USART2_SendString(str);
-		  USART2_SendString(" debug pm3\r\n");
 	  }
 
 	  // todo: provjeri tocno poruku i testiraj
 	  if (strstr(str,"LOW POWER")) {
 		  USART2_SendString(str);
 		  sendCommand("aaLowPower");
-		  USART2_SendString(" debug pm3\r\n");
+	  }
+
+	  if (strstr(str,"+CGPSINF:")) {
+
+		  setLocationFlag(&locationFlag);
+		  USART2_SendString(str);
+		  str="";
+
 	  }
 
 	  //dummy implemetacija
@@ -64,10 +123,11 @@ void processMessage(char *str){
 		  // pali power
 		  // warm reset
 		  // loop sa CGPSSTATUS  .....to ide ova prva funkcija
-		  USART2_SendString(" debug pm1\r\n");
 	  }
 
 	  if (strstr(str,"OK")) {
+
+		  checkLocation(&locationFlag,str);
 		  USART2_SendString(str);
 		  USART2_SendString("\r\n");
 	  }
@@ -140,11 +200,11 @@ void checkSMS(void){
 
 //	todo: connect SMS variable to SMS info / interrupt
 	static int state=10;
-	char buffer[100]={'\0'};
-	char str[100]={'\0'};
+	char buffer[BUFSIZE]={'\0'};
+	char str[BUFSIZE]={'\0'};
 
 
-	if (SMS==1){
+	if (SMS==3){
 		//clear SMS flag
 		SMS=2;
 		//start routine

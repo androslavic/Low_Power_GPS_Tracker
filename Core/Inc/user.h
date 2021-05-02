@@ -1,7 +1,7 @@
 #ifndef __USER_H__
 #define __USER_H__
 
-#define BUFSIZE 100
+#define BUFSIZE 200
 
 #include "main.h"
 
@@ -16,6 +16,12 @@ void processMessage(char *str);
 void sendCommand (char *str);
 
 void checkSMS(void);
+
+void parseLocation (void);
+
+void setLocationFlag(int *locationFlag);
+
+void checkLocation(int *locationFlag,char *str);
 
 int SMS;
 

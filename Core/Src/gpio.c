@@ -15,7 +15,7 @@ void MX_GPIO_Init(void)
 
   /*Configure GPIO pin : PA4 */
   GPIO_InitStruct.Pin = GPIO_PIN_4;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
@@ -38,13 +38,17 @@ void MX_GPIO_Init(void)
 
 void HAL_GPIO_EXTI_Callback (uint16_t GPIO_Pin){
 
-//		if (GPIO_Pin==GPIO_PIN_4){
-//		       BSP_LED_Toggle(LED3);
-//		}
+		if (GPIO_Pin==GPIO_PIN_4){
+		  	 USART2_Debug("GPIO pin4!\r\n");
+		       BSP_LED_Toggle(LED3);
+		}
 
 	//TODO: Pin4 i Pin5 pogresno mapirani??
 		if (GPIO_Pin==GPIO_PIN_5){
+		  	 USART2_Debug("GPIO pin5!\r\n");
 		       BSP_LED_Toggle(LED3);
+		       //bug: kad spojim pinD4 na gnd zove se ova funkcija
+		       //bug: kad spojim pinA4 na gnd zove se ova funkcija
 		}
 
 }
