@@ -10,20 +10,22 @@ void checkLocation(int *locationFlag, char *str){
 
 	  char * token;
 	  char * string;
+	  int cnt=0;
 
 	if (*locationFlag){
 
-		USART2_Debug("Location flag! \r\n");
 
 		token = strtok (str," ,.-");
 		  while (token != NULL)
 		  {
 		    string=token;
+			cnt++;
+			parseLocation(cnt,string);
+
 			USART2_SendString(string);
 			USART2_SendString("\r\n");
 		    token = strtok (NULL, " ,.-");
 		  }
-		USART2_Debug("Location flag! \r\n");
 
 		*locationFlag=0;
 	}
@@ -39,18 +41,29 @@ void cleanBuffer(char *buffer){
 
 }
 
-void parseLocation (void){
+void parseLocation (int cnt,char *string){
 
-	char c=0;
-	char *str="";
+//	char c=0;
+//	char *str="";
+//
+//	HAL_Delay(50);
+//	if (LPUART1_Dequeue (&c) != 0) {
+//		USART2_SendChar(c);
+//		print2string(str,c);
+//		HAL_Delay(10);
+//	}
 
-	HAL_Delay(50);
-	if (LPUART1_Dequeue (&c) != 0) {
-		USART2_SendChar(c);
-		print2string(str,c);
-		HAL_Delay(10);
+	switch (cnt) {
+
+	case 4:
+		break;
+	case 5:
+		break;
+	case 6:
+		break;
+
+
 	}
-
 
 }
 
@@ -76,7 +89,6 @@ void processMessage(char *str){
 
 	static int locationFlag=0;
 
-	 char *buffer={'\0'};
 		//todo: implement action for not fix,2d fix,3d fix
 	  if (strstr(str,"CGPSSTATUS")) {
 
@@ -139,12 +151,32 @@ void sendCommand (char *str){
 
 
 
-	  if (strstr(str,"aass0")) {SMS=0;}
-	  if (strstr(str,"aass1")) {SMS=1;}
-	  if (strstr(str,"aass2")) {SMS=2;}
+	  if (strstr(str,"aass0")) {
+		  SMS=0;
+		  cleanBuffer(str);
+	  }
+	  if (strstr(str,"aass1")) {
+		  SMS=1;
+		  cleanBuffer(str);
+	  }
+	  if (strstr(str,"aass2")) {
+		  SMS=2;
+		  cleanBuffer(str);
+	  }
+
+	  if (strstr(str,"aakey")) {
+		  cleanBuffer(str);
+		  PowerOnKey();
+	  }
+
+	  if (strstr(str,"aaoff")) {
+		  cleanBuffer(str);
+		  LPUART1_SendString("\r\nAT+CPOWD=1\r\n");
+	  }
+
 
 	  if (strstr(str,"aasss")) {
-		  USART2_Debug("Suspend tick in 500ms \r\n");
+		  USART2_Debug("Suspend tick in 500ms");
 		  HAL_SuspendTick();
 
 		  memset(str,0,strlen(str));
@@ -215,7 +247,7 @@ void checkSMS(void){
 		HAL_Delay(500);
 		LPUART_handler(str);
 
-		USART2_Debug("end of 1 \r\n");
+		USART2_Debug("end of 1");
 
 	}
 
@@ -247,7 +279,7 @@ void checkSMS(void){
 		default:
 		strcpy(buffer,"");
 		SMS=0;
-		USART2_Debug("End of SMS routine. \r\n");
+		USART2_Debug("End of SMS routine.");
 
 
 		}
@@ -258,3 +290,15 @@ void checkSMS(void){
 
 }
 
+void PowerOnKey (void){
+
+	//switch power on via Key pin on sim808
+
+	  //USART2_Debug("Key set to 0 for 1 second");
+	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1,GPIO_PIN_RESET);
+	  HAL_Delay(1000);
+	  //USART2_Debug("Key set to 1");
+	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1,GPIO_PIN_SET);
+	  USART2_SendString("\r\n");
+
+}

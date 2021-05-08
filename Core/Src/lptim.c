@@ -116,7 +116,6 @@ void USER_LPTIM_IRQHandler (LPTIM_HandleTypeDef *hlptim) {
 
 
 	BSP_LED_Toggle(LED3);
-
 	if (SMS){
 
 		switch (cnt){
@@ -157,7 +156,7 @@ void USER_LPTIM_IRQHandler (LPTIM_HandleTypeDef *hlptim) {
 
 	}
 	else if (sleepOK==1){
-		USART2_Debug("LPTIM sleep! \r\n");
+		USART2_Debug("LPTIM sleep!");
 
 		HAL_SuspendTick();
 

@@ -17,11 +17,13 @@ void sendCommand (char *str);
 
 void checkSMS(void);
 
-void parseLocation (void);
+void parseLocation (int cnt,char *string);
 
 void setLocationFlag(int *locationFlag);
 
 void checkLocation(int *locationFlag,char *str);
+
+void PowerOnKey (void);
 
 int SMS;
 

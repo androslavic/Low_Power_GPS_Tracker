@@ -281,8 +281,9 @@ void  USART2_SendString(char *c) {
 void  USART2_Debug(char *c) {
 
 	if (debug){
-		USART2_SendString("Debug: ");
+		USART2_SendString("\r\nDebug: ");
 		USART2_SendString(c);
+		USART2_SendString("\r\n");
 		HAL_Delay(500);
 	}
 }
