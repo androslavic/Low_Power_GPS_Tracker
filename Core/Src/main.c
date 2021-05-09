@@ -16,7 +16,7 @@ int main(void)
 
   	init();
 
-  	communication_test();
+  	//communication_test();
 
   	USART2_Debug("Suspend tick in 500ms");
 	HAL_SuspendTick();
