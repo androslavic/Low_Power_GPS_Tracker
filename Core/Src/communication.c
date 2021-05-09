@@ -17,7 +17,9 @@ void communication_test(void){
 
 	  HAL_Delay(100);
 
-	  while (timeout==1)
+	  USART2_Debug("prvo");
+
+	  while (timeout==communicationPending)
 	  {
 		  	if(LPUART1_Dequeue (&d) != 0 ) {
 
@@ -27,7 +29,7 @@ void communication_test(void){
 
 		  			if (strstr(string,"OK")){
 		  				USART2_Debug("Communication test OK.");
-		  				timeout=0;
+		  				timeout=communicationOK;
 		  				check=1;
 		  				}
 		  		}
@@ -40,7 +42,23 @@ void communication_test(void){
 		  			sendCommand(gpsColdRestart);
 		  			HAL_Delay(100);
 		  			LPUART_reader(buffer);
-		  			}
+		  		}
 		  	}
 	  }
+	  USART2_Debug("prvo!");
+
+	  if(timeout==communicationFail){
+		  USART2_Debug("Communication test failed. Trying device restart!");
+		  PowerOnKey();
+		  USART2_Debug("Device turned on via Key. Starting second communication test");
+	  }
+	  USART2_Debug("drugo!");
+
+		  if (timeout==communicationHardFail){
+			  //STM reset
+			  USART2_Debug("Communication test failed. Restarting MCU!");
+			  __NVIC_SystemReset();
+		  }
+		  USART2_Debug("trece!");
+
 }

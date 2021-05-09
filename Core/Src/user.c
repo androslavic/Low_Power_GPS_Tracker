@@ -168,6 +168,10 @@ void sendCommand (char *str){
 		  cleanBuffer(str);
 		  PowerOnKey();
 	  }
+	  if (strstr(str,"aamr")) {
+		  USART2_Debug("Restarting MCU!");
+		  __NVIC_SystemReset();
+	  }
 
 	  if (strstr(str,"aaoff")) {
 		  cleanBuffer(str);
@@ -293,12 +297,11 @@ void checkSMS(void){
 void PowerOnKey (void){
 
 	//switch power on via Key pin on sim808
-
+	  HAL_ResumeTick();
 	  //USART2_Debug("Key set to 0 for 1 second");
 	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1,GPIO_PIN_RESET);
 	  HAL_Delay(1000);
 	  //USART2_Debug("Key set to 1");
 	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1,GPIO_PIN_SET);
 	  USART2_SendString("\r\n");
-
 }

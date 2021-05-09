@@ -33,7 +33,7 @@ void MX_LPTIM1_Init(void)
   /* USER CODE BEGIN LPTIM1_Init 0 */
 	loc=0;
 	sleepOK=0;
-	timeout=1;
+	timeout=communicationPending;
 
   /* USER CODE END LPTIM1_Init 0 */
 
@@ -117,55 +117,20 @@ void USER_LPTIM_IRQHandler (LPTIM_HandleTypeDef *hlptim) {
 	//if sms is recieved, set a flag
 
 
+	if(++testCnt==2) {
+		if (timeout==communicationPending)
+			timeout=communicationFail;
+	}
 	if(++testCnt==4) {
-
-		if(timeout==1){
-			USART2_Debug("Communication test failed.");
-		}
-		timeout=0;
+		if (timeout==communicationFail)
+			timeout=communicationHardFail;
 	}
 
 	BSP_LED_Toggle(LED3);
-	if (SMS){
 
-		switch (cnt){
 
-			case 0:
-				//procitaj sms
-				cnt++;
-				break;
 
-			case 1:
-				sendCommand("\r\nAT+CGPSPWR=1\r\n");
-				sendCommand("\r\nAT+CGPSRST=1\r\n");
-				cnt++;
-				break;
-
-			case 2:
-				sendCommand("\r\nAT+CGPSSTATUS?\r\n");
-				//HAL_Delay(500);
-				//loc=checkLocation();
-				if (loc==3)
-					cnt++;
-				break;
-
-			case 3:
-				//send sms
-				cnt++;
-				break;
-
-			case 4:
-				sendCommand("\r\nAT+CGPSPWR=0\r\n");
-				cnt++;
-				break;
-
-			default:
-				SMS=0;
-
-		}
-
-	}
-	else if (sleepOK==1){
+	if (sleepOK==1){
 		USART2_Debug("LPTIM sleep!");
 
 		HAL_SuspendTick();

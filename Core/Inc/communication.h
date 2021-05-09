@@ -6,14 +6,11 @@
 #include <string.h>
 #include "user.h"
 #include "lptim.h"
-
-
+#include "main.h"
 #endif
 
 void  communication_test(void);
 
 extern int timeout;
 extern int debug;
-
-
 

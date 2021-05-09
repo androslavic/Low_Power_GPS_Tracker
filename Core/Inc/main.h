@@ -22,6 +22,17 @@ extern "C" {
 void Error_Handler(void);
 
 
+
+enum communication {
+
+	communicationOK=1,
+	communicationFail=2,
+	communicationHardFail=3,
+	communicationPending=4
+};
+
+
+
 #ifdef __cplusplus
 }
 #endif

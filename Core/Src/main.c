@@ -16,13 +16,12 @@ int main(void)
 
   	init();
 
-//
   	communication_test();
-//
-//  	USART2_Debug("Suspend tick in 500ms");
-//	HAL_SuspendTick();
-//
-//	HAL_PWR_EnterSLEEPMode(PWR_MAINREGULATOR_ON, PWR_SLEEPENTRY_WFI);
+
+  	USART2_Debug("Suspend tick in 500ms");
+	HAL_SuspendTick();
+
+	HAL_PWR_EnterSLEEPMode(PWR_MAINREGULATOR_ON, PWR_SLEEPENTRY_WFI);
 //
 //	HAL_Delay(500);
 //
