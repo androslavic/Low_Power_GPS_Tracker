@@ -36,7 +36,7 @@ int main(void)
 
 //
 //
-//	USART2_Debug("Start while(1)");
+	USART2_Debug("Start while(1)");
 
 
   while (1)

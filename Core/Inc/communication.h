@@ -7,14 +7,13 @@
 #include "user.h"
 #include "lptim.h"
 
+
 #endif
 
 void  communication_test(void);
 
 extern int timeout;
 extern int debug;
-
-
 
 
 
