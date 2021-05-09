@@ -17,7 +17,6 @@ extern "C" {
 #include <stdlib.h>
 #include "communication.h"
 #include "init.h"
-#include "commands.h"
 
 
 void Error_Handler(void);

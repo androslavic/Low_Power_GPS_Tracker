@@ -60,7 +60,7 @@ void  USART2_SendString(char *c);
 void  USART2_Debug(char *c);
 void LPUART_handler(char *str);
 void USART2_handler(char *str);
-
+void LPUART_reader(char *str);
 
 /* USER CODE END Prototypes */
 

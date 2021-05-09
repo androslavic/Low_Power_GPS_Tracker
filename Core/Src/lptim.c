@@ -31,7 +31,8 @@ void MX_LPTIM1_Init(void)
 {
 
   /* USER CODE BEGIN LPTIM1_Init 0 */
-
+	loc=0;
+	sleepOK=0;
   /* USER CODE END LPTIM1_Init 0 */
 
   /* USER CODE BEGIN LPTIM1_Init 1 */
@@ -107,21 +108,55 @@ void flag_Toggle(int *flag){
 
 void USER_LPTIM_IRQHandler (LPTIM_HandleTypeDef *hlptim) {
 
-	static int i=1;
+	static int cnt=0;
+
 	//todo: check SMS status every cycle
 	//if sms is recieved, set a flag
 
-	i++;
 
-	if (i%1==0) {
-		BSP_LED_Toggle(LED3);
-		flag_Toggle(&timerFlag);
+
+	BSP_LED_Toggle(LED3);
+	if (SMS){
+
+		switch (cnt){
+
+			case 0:
+				//procitaj sms
+				cnt++;
+				break;
+
+			case 1:
+				sendCommand("\r\nAT+CGPSPWR=1\r\n");
+				sendCommand("\r\nAT+CGPSRST=1\r\n");
+				cnt++;
+				break;
+
+			case 2:
+				sendCommand("\r\nAT+CGPSSTATUS?\r\n");
+				//HAL_Delay(500);
+				//loc=checkLocation();
+				if (loc==3)
+					cnt++;
+				break;
+
+			case 3:
+				//send sms
+				cnt++;
+				break;
+
+			case 4:
+				sendCommand("\r\nAT+CGPSPWR=0\r\n");
+				cnt++;
+				break;
+
+			default:
+				SMS=0;
+
+		}
+
 	}
-
-	if (i%5==0){
-		timeout=0;
-		SMS=1;
-		USART2_Debug("LPTIM sleep! \r\n");
+	else if (sleepOK==1){
+		USART2_Debug("LPTIM sleep!");
 
 		HAL_SuspendTick();
 

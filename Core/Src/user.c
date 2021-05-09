@@ -1,12 +1,69 @@
 #include "user.h"
 
 
+void setLocationFlag(int *locationFlag){
+
+	*locationFlag=1;
+}
+
+void checkLocation(int *locationFlag, char *str){
+
+	  char * token;
+	  char * string;
+	  int cnt=0;
+
+	if (*locationFlag){
+
+
+		token = strtok (str," ,.-");
+		  while (token != NULL)
+		  {
+		    string=token;
+			cnt++;
+			parseLocation(cnt,string);
+
+			USART2_SendString(string);
+			USART2_SendString("\r\n");
+		    token = strtok (NULL, " ,.-");
+		  }
+
+		*locationFlag=0;
+	}
+}
+
+
 void cleanBuffer(char *buffer){
 
 	int i;
     for(i=0;i<BUFSIZE;i++){
     	buffer[i]= 0;
     }
+
+}
+
+void parseLocation (int cnt,char *string){
+
+//	char c=0;
+//	char *str="";
+//
+//	HAL_Delay(50);
+//	if (LPUART1_Dequeue (&c) != 0) {
+//		USART2_SendChar(c);
+//		print2string(str,c);
+//		HAL_Delay(10);
+//	}
+
+	switch (cnt) {
+
+	case 4:
+		break;
+	case 5:
+		break;
+	case 6:
+		break;
+
+
+	}
 
 }
 
@@ -30,30 +87,44 @@ void print2string (char *str, char c){
 void processMessage(char *str){
 
 
+	static int locationFlag=0;
+
 		//todo: implement action for not fix,2d fix,3d fix
 	  if (strstr(str,"CGPSSTATUS")) {
+
+		  if (strstr(str,"Not Fix"))
+			  loc=1;
+		  if (strstr(str,"2D Fix"))
+			  loc=2;
+		  if (strstr(str,"3D Fix"))
+			  loc=3;
+
 		  USART2_SendString(str);
 
 		  // citam CGPSSTATUS dok nije 3d fix
 		  // 3dfix--> pozivam novu funkciju sendCommand("aalocation");
-		  USART2_SendString(" debug pm1\r\n");
 	  }
 
 	  if (strstr(str,"CGPSPWR")) {
 		  USART2_SendString(str);
-		  USART2_SendString(" debug pm2\r\n");
 	  }
 
 	  if (strstr(str,"CGPSRST")) {
 		  USART2_SendString(str);
-		  USART2_SendString(" debug pm3\r\n");
 	  }
 
 	  // todo: provjeri tocno poruku i testiraj
 	  if (strstr(str,"LOW POWER")) {
 		  USART2_SendString(str);
 		  sendCommand("aaLowPower");
-		  USART2_SendString(" debug pm3\r\n");
+	  }
+
+	  if (strstr(str,"+CGPSINF:")) {
+
+		  setLocationFlag(&locationFlag);
+		  USART2_SendString(str);
+		  str="";
+
 	  }
 
 	  //dummy implemetacija
@@ -64,10 +135,11 @@ void processMessage(char *str){
 		  // pali power
 		  // warm reset
 		  // loop sa CGPSSTATUS  .....to ide ova prva funkcija
-		  USART2_SendString(" debug pm1\r\n");
 	  }
 
 	  if (strstr(str,"OK")) {
+
+		  checkLocation(&locationFlag,str);
 		  USART2_SendString(str);
 		  USART2_SendString("\r\n");
 	  }
@@ -79,12 +151,32 @@ void sendCommand (char *str){
 
 
 
-	  if (strstr(str,"aass0")) {SMS=0;}
-	  if (strstr(str,"aass1")) {SMS=1;}
-	  if (strstr(str,"aass2")) {SMS=2;}
+	  if (strstr(str,"aass0")) {
+		  SMS=0;
+		  cleanBuffer(str);
+	  }
+	  if (strstr(str,"aass1")) {
+		  SMS=1;
+		  cleanBuffer(str);
+	  }
+	  if (strstr(str,"aass2")) {
+		  SMS=2;
+		  cleanBuffer(str);
+	  }
+
+	  if (strstr(str,"aakey")) {
+		  cleanBuffer(str);
+		  PowerOnKey();
+	  }
+
+	  if (strstr(str,"aaoff")) {
+		  cleanBuffer(str);
+		  LPUART1_SendString("\r\nAT+CPOWD=1\r\n");
+	  }
+
 
 	  if (strstr(str,"aasss")) {
-		  USART2_Debug("Suspend tick in 500ms \r\n");
+		  USART2_Debug("Suspend tick in 500ms");
 		  HAL_SuspendTick();
 
 		  memset(str,0,strlen(str));
@@ -140,11 +232,11 @@ void checkSMS(void){
 
 //	todo: connect SMS variable to SMS info / interrupt
 	static int state=10;
-	char buffer[100]={'\0'};
-	char str[100]={'\0'};
+	char buffer[BUFSIZE]={'\0'};
+	char str[BUFSIZE]={'\0'};
 
 
-	if (SMS==1){
+	if (SMS==3){
 		//clear SMS flag
 		SMS=2;
 		//start routine
@@ -155,7 +247,7 @@ void checkSMS(void){
 		HAL_Delay(500);
 		LPUART_handler(str);
 
-		USART2_Debug("end of 1 \r\n");
+		USART2_Debug("end of 1");
 
 	}
 
@@ -187,7 +279,7 @@ void checkSMS(void){
 		default:
 		strcpy(buffer,"");
 		SMS=0;
-		USART2_Debug("End of SMS routine. \r\n");
+		USART2_Debug("End of SMS routine.");
 
 
 		}
@@ -198,3 +290,15 @@ void checkSMS(void){
 
 }
 
+void PowerOnKey (void){
+
+	//switch power on via Key pin on sim808
+
+	  //USART2_Debug("Key set to 0 for 1 second");
+	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1,GPIO_PIN_RESET);
+	  HAL_Delay(1000);
+	  //USART2_Debug("Key set to 1");
+	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1,GPIO_PIN_SET);
+	  USART2_SendString("\r\n");
+
+}
