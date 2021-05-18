@@ -4,6 +4,11 @@ void init (void) {
 
 
 	  SMS=SMS_waiting;
+	  loc=0;
+	  sleepOK=0;
+	  timeout=communicationPending;
+	  debug=1;
+
 
 	  HAL_Init();
 

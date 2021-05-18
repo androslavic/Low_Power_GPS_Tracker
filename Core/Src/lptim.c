@@ -31,9 +31,6 @@ void MX_LPTIM1_Init(void)
 {
 
   /* USER CODE BEGIN LPTIM1_Init 0 */
-	loc=0;
-	sleepOK=0;
-	timeout=communicationPending;
 
   /* USER CODE END LPTIM1_Init 0 */
 
@@ -124,7 +121,7 @@ void USER_LPTIM_IRQHandler (LPTIM_HandleTypeDef *hlptim) {
 			timeout=communicationHardFail;
 	}
 
-	//BSP_LED_Toggle(LED3);
+	BSP_LED_Toggle(LED3);
 
 
 
