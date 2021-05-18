@@ -7,16 +7,22 @@ extern "C" {
 
 #include "stm32l0xx_hal.h"
 #include "stm32l0xx_nucleo_32.h"
-#include "lptim.h"
 #include "user.h"
+#include "location.h"
+#include "lptim.h"
 #include "usart.h"
 #include "gpio.h"
 #include "sysclk.h"
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include "location.h"
 #include "communication.h"
+#include "sms.h"
+#include "processing.h"
+#include "sendCommand.h"
 #include "init.h"
+
 
 
 void Error_Handler(void);

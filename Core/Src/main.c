@@ -17,11 +17,11 @@ int main(void)
 
   	//communication_test();
 
-  	USART2_Debug("Suspend tick in 500ms");
-	HAL_SuspendTick();
-
-	HAL_PWR_EnterSLEEPMode(PWR_MAINREGULATOR_ON, PWR_SLEEPENTRY_WFI);
+//  USART2_Debug("Suspend tick in 500ms");
+//	HAL_SuspendTick();
 //
+//	HAL_PWR_EnterSLEEPMode(PWR_MAINREGULATOR_ON, PWR_SLEEPENTRY_WFI);
+////
 //	HAL_Delay(500);
 //
 //	USART2_Debug("Debug: enter STOP in 500ms");
@@ -39,7 +39,7 @@ int main(void)
 
   while (1)
   {
-		  checkSMS();
+		  //checkSMS();
 		  LPUART_handler(buffer2);
 		  USART2_handler(buffer1);
 	  }
