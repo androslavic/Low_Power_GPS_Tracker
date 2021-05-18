@@ -43,16 +43,15 @@ void MX_GPIO_Init(void)
 void HAL_GPIO_EXTI_Callback (uint16_t GPIO_Pin){
 
 
-//	HAL_NVIC_DisableIRQ(EXTI4_15_IRQn);
+	HAL_NVIC_DisableIRQ(EXTI4_15_IRQn);
 
 	//Pin 5 mapped to Pin4 on develompment board
 		if (GPIO_Pin==GPIO_PIN_5){
 		    BSP_LED_Toggle(LED3);
 			USART2_Debug("GPIO pin5!");
-
-			//function callback happens 2 times when debug is enable??
+			SMS=SMS_recieved;
 		}
-//	HAL_NVIC_EnableIRQ(EXTI4_15_IRQn);
+	HAL_NVIC_EnableIRQ(EXTI4_15_IRQn);
 
 }
 

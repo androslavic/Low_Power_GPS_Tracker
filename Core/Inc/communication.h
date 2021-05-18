@@ -1,4 +1,4 @@
-#ifndef __COMMUNICATION_H__commands
+#ifndef __COMMUNICATION_H__
 #define __COMMUNICATION_H__
 
 #include "stm32l0xx_hal.h"

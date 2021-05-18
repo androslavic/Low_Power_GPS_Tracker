@@ -5,7 +5,16 @@
 
 #include "main.h"
 
+typedef struct {
+	int latitude1;
+	int latitude2;
+	char lat;
+	int longitude1;
+	int longitude2;
+	char lon;
+}location;
 
+char strletter(char *str);
 
 void cleanBuffer(char *buffer);
 
@@ -17,11 +26,11 @@ void sendCommand (char *str);
 
 void checkSMS(void);
 
-void parseLocation (int cnt,char *string);
+location parseLocation (int cnt,char *string,location location);
 
 void setLocationFlag(int *locationFlag);
 
-void checkLocation(int *locationFlag,char *str);
+location checkLocation(int *locationFlag,char *str);
 
 void PowerOnKey (void);
 

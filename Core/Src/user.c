@@ -6,11 +6,12 @@ void setLocationFlag(int *locationFlag){
 	*locationFlag=1;
 }
 
-void checkLocation(int *locationFlag, char *str){
+location checkLocation(int *locationFlag, char *str){
 
-	  char * token;
-	  char * string;
-	  int cnt=0;
+	static location location;
+	char * token;
+	char * string;
+	int cnt=0;
 
 	if (*locationFlag){
 
@@ -20,15 +21,15 @@ void checkLocation(int *locationFlag, char *str){
 		  {
 		    string=token;
 			cnt++;
-			parseLocation(cnt,string);
+			parseLocation(cnt,string,location);
 
-			USART2_SendString(string);
-			USART2_SendString("\r\n");
 		    token = strtok (NULL, " ,.-");
 		  }
 
 		*locationFlag=0;
 	}
+	return location;
+
 }
 
 
@@ -41,30 +42,45 @@ void cleanBuffer(char *buffer){
 
 }
 
-void parseLocation (int cnt,char *string){
+location parseLocation (int cnt,char *string,location location){
 
-//	char c=0;
-//	char *str="";
-//
-//	HAL_Delay(50);
-//	if (LPUART1_Dequeue (&c) != 0) {
-//		USART2_SendChar(c);
-//		print2string(str,c);
-//		HAL_Delay(10);
-//	}
+
 
 	switch (cnt) {
 
 	case 4:
+		location.latitude1=atoi(string);
+		USART2_Debug("location.latitude1: ");
+		USART2_SendString(string);
 		break;
 	case 5:
+		location.latitude2=atoi(string);
+		USART2_Debug("location.latitude2: ");
+		USART2_SendString(string);
 		break;
 	case 6:
+		location.lat=strletter(string);
+		USART2_Debug("location.lat: ");
+		USART2_SendChar(location.lat);
+		break;
+	case 7:
+		USART2_Debug("location.longitude1: ");
+		USART2_SendString(string);
+		location.longitude1=atoi(string);
+		break;
+	case 8:
+		USART2_Debug("location.longitude2: ");
+		USART2_SendString(string);
+		location.longitude2=atoi(string);
+		break;
+	case 9:
+		location.lon=strletter(string);
+		USART2_Debug("location.lon: ");
+		USART2_SendChar(location.lon);
 		break;
 
-
 	}
-
+	return location;
 }
 
 void print2string (char *str, char c){
@@ -137,6 +153,18 @@ void processMessage(char *str){
 		  // loop sa CGPSSTATUS  .....to ide ova prva funkcija
 	  }
 
+	  if (strstr(str,"RINnnG")) {
+		  USART2_SendString("zvoni mi...");
+		  USART2_SendString("mobilni");
+		  USART2_SendString("te amo");
+		  USART2_SendString("te amooooo");
+		  //procitaj sms
+		  //if (sms==gps)
+		  // pali power
+		  // warm reset
+		  // loop sa CGPSSTATUS  .....to ide ova prva funkcija
+	  }
+
 	  if (strstr(str,"OK")) {
 
 		  checkLocation(&locationFlag,str);
@@ -151,9 +179,13 @@ void sendCommand (char *str){
 
 
 
+	  if (strstr(str,"aacb")) {
+		  cleanBuffer(str);
+		  USART2_SendString(str);
+	  }
+
 	  if (strstr(str,"aass0")) {
 		  SMS=0;
-		  cleanBuffer(str);
 	  }
 	  if (strstr(str,"aass1")) {
 		  SMS=1;
@@ -240,23 +272,21 @@ void checkSMS(void){
 	char str[BUFSIZE]={'\0'};
 
 
-	if (SMS==3){
-		//clear SMS flag
-		SMS=2;
-		//start routine
-		state=0;
-		strcpy(str,"\r\nAT+CGPSPWR=1\r\n");
-		LPUART1_SendString(str);
+	if (SMS==SMS_recieved){
+
+		USART2_Debug("SMS recieved!");
+		LPUART1_SendString("AT+CMGL=\"REC UNREAD\"\r\n");
 
 		HAL_Delay(500);
 		LPUART_handler(str);
 
-		USART2_Debug("end of 1");
+		SMS=SMS_read;
+
 
 	}
 
 	//todo: read SMS to buffer
-	strcpy(buffer,"GPS");
+	strcpy(buffer,"GPa");
 
 
 	if(strstr(buffer,"GPS")){
@@ -281,9 +311,7 @@ void checkSMS(void){
 			break;
 
 		default:
-		strcpy(buffer,"");
-		SMS=0;
-		USART2_Debug("End of SMS routine.");
+		SMS=SMS_waiting;
 
 
 		}
@@ -298,10 +326,26 @@ void PowerOnKey (void){
 
 	//switch power on via Key pin on sim808
 	  HAL_ResumeTick();
-	  //USART2_Debug("Key set to 0 for 1 second");
+	   //USART2_Debug("Key set to 0 for 1 second");
 	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1,GPIO_PIN_RESET);
-	  HAL_Delay(1000);
+	  HAL_Delay(2000);
 	  //USART2_Debug("Key set to 1");
 	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1,GPIO_PIN_SET);
 	  USART2_SendString("\r\n");
 }
+
+
+
+char strletter(char *str){
+
+	int i;
+
+	for (i=0;i<strlen(str);i++){
+
+        if (str[i]=='N' || str[i]=='W' || str[i]=='E' || str[i]=='S'){
+        	return str[i];
+        }
+	}
+	return 0;
+}
+

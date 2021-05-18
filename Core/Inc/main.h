@@ -31,7 +31,13 @@ enum communication {
 	communicationPending=4
 };
 
+enum SMS_routine {
 
+	SMS_waiting=0,
+	SMS_recieved=1,
+	SMS_read=2,
+	SMS_processed=3,
+};
 
 #ifdef __cplusplus
 }

@@ -110,11 +110,9 @@ void flag_Toggle(int *flag){
 
 void USER_LPTIM_IRQHandler (LPTIM_HandleTypeDef *hlptim) {
 
-	static int cnt=0;
+	//static int cnt=0;
 	static int testCnt=0;
 
-	//todo: check SMS status every cycle
-	//if sms is recieved, set a flag
 
 
 	if(++testCnt==2) {

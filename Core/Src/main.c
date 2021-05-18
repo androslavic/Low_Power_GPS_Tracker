@@ -9,10 +9,9 @@ int main(void)
 {
   char buffer1[BUFSIZE]={'\0'};
   char buffer2[BUFSIZE]= {'\0'};
-//  char c=0;
+//  char c=0,d=0;
 //  int i=0;
 
-  SMS=0;
 
   	init();
 
@@ -40,19 +39,16 @@ int main(void)
 
   while (1)
   {
-	  if (SMS==55)
 		  checkSMS();
-	  else{
 		  LPUART_handler(buffer2);
 		  USART2_handler(buffer1);
 	  }
 
-//	  if (i%1000==0)
-//		BSP_LED_Toggle(LED3);
-//	  i++;
 
   }
-}
+
+
+
 
 
 
