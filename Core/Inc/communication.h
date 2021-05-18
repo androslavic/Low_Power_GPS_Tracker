@@ -1,4 +1,4 @@
-#ifndef __COMMUNICATION_H__commands
+#ifndef __COMMUNICATION_H__
 #define __COMMUNICATION_H__
 
 #include "stm32l0xx_hal.h"
@@ -6,15 +6,11 @@
 #include <string.h>
 #include "user.h"
 #include "lptim.h"
-
+#include "main.h"
 #endif
 
 void  communication_test(void);
 
 extern int timeout;
 extern int debug;
-
-
-
-
 

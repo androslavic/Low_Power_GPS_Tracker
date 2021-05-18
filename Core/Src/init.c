@@ -2,6 +2,9 @@
 
 void init (void) {
 
+
+	  SMS=SMS_waiting;
+
 	  HAL_Init();
 
 	  SystemClock_Config();
@@ -13,6 +16,7 @@ void init (void) {
 	  MX_LPTIM1_Init();
 
 	  HAL_Delay(1000);
+
 
 
 }

@@ -9,21 +9,19 @@ int main(void)
 {
   char buffer1[BUFSIZE]={'\0'};
   char buffer2[BUFSIZE]= {'\0'};
-//  char c=0;
+//  char c=0,d=0;
 //  int i=0;
 
-  SMS=0;
 
   	init();
 
-//
-  	communication_test();
-//
-//  	USART2_Debug("Suspend tick in 500ms");
+  	//communication_test();
+
+//  USART2_Debug("Suspend tick in 500ms");
 //	HAL_SuspendTick();
 //
 //	HAL_PWR_EnterSLEEPMode(PWR_MAINREGULATOR_ON, PWR_SLEEPENTRY_WFI);
-//
+////
 //	HAL_Delay(500);
 //
 //	USART2_Debug("Debug: enter STOP in 500ms");
@@ -36,24 +34,21 @@ int main(void)
 
 //
 //
-//	USART2_Debug("Start while(1)");
+	USART2_Debug("Start while(1)");
 
 
   while (1)
   {
-	  if (SMS==55)
-		  checkSMS();
-	  else{
+		  //checkSMS();
 		  LPUART_handler(buffer2);
 		  USART2_handler(buffer1);
 	  }
 
-//	  if (i%1000==0)
-//		BSP_LED_Toggle(LED3);
-//	  i++;
 
   }
-}
+
+
+
 
 
 
