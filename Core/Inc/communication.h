@@ -9,7 +9,8 @@
 #include "main.h"
 #endif
 
-void  communication_test(void);
+void  communicationTest(void);
+void communicationRoutine(int status);
 
 extern int timeout;
 extern int debug;

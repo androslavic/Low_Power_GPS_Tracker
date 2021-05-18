@@ -2,12 +2,9 @@
 
 void processMessage(char *str){
 
-
 	static int locationFlag=0;
-	location location;
-	char str1[100]={0};
 
-		//todo: implement action for not fix,2d fix,3d fix
+	//todo: implement action for not fix,2d fix,3d fix
 	  if (strstr(str,"CGPSSTATUS")) {
 
 		  if (strstr(str,"Not Fix")){
@@ -61,7 +58,7 @@ void processMessage(char *str){
 		  // loop sa CGPSSTATUS  .....to ide ova prva funkcija
 	  }
 
-	  if (strstr(str,"RINnnG")) {
+	  if (strstr(str,"RING")) {
 		  USART2_SendString("zvoni mi...");
 		  USART2_SendString("mobilni");
 		  USART2_SendString("te amo");
@@ -74,13 +71,10 @@ void processMessage(char *str){
 	  }
 
 	  if (strstr(str,"OK")) {
-		  strcpy(str1,str);
+
+		  checkLocation(&locationFlag,str);
 		  USART2_SendString(str);
 		  USART2_SendString("\r\n");
-		  location=checkLocation(&locationFlag,str1);
-
-		  sprintf(str1,"%2d.%4d %c, %2d.%4d %c",location.latitude1,location.latitude2,location.lat,location.longitude1,location.longitude2,location.lon);
-		  USART2_SendString(str1);
 
 	  }
 

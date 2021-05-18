@@ -45,6 +45,9 @@ enum SMS_routine {
 	SMS_processed=3,
 };
 
+int debug;
+
+
 #ifdef __cplusplus
 }
 #endif
