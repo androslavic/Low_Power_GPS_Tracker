@@ -281,8 +281,9 @@ void  USART2_SendString(char *c) {
 void  USART2_Debug(char *c) {
 
 	if (debug){
-		USART2_SendString("Debug: ");
+		USART2_SendString("\r\nDebug: ");
 		USART2_SendString(c);
+		USART2_SendString("\r\n");
 		HAL_Delay(500);
 
 	}
@@ -334,6 +335,20 @@ void LPUART_handler(char *str){
 	  }
 }
 
+void LPUART_reader(char *str){
+
+	char c=0;
+	char d=0;
+
+	while (!(d=='O' && c=='K')){
+		d=c;
+		if (LPUART1_Dequeue (&c) != 0) {
+			print2string(str,c);
+			processMessage(str);
+		}
+	}
+
+}
 
 /* USER CODE END 1 */
 

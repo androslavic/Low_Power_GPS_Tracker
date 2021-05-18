@@ -25,8 +25,8 @@ extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
-#include "stm32l0xx_hal.h"
-#include "user.h"
+#include "main.h"
+
 /* USER CODE BEGIN Includes */
 char  RX_BUFFER[BUFSIZE];
 char  RX_BUFFER_LP[BUFSIZE];
@@ -60,7 +60,7 @@ void  USART2_SendString(char *c);
 void  USART2_Debug(char *c);
 void LPUART_handler(char *str);
 void USART2_handler(char *str);
-
+void LPUART_reader(char *str);
 
 /* USER CODE END Prototypes */
 

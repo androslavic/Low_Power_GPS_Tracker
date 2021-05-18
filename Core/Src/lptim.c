@@ -31,6 +31,9 @@ void MX_LPTIM1_Init(void)
 {
 
   /* USER CODE BEGIN LPTIM1_Init 0 */
+	loc=0;
+	sleepOK=0;
+	timeout=communicationPending;
 
   /* USER CODE END LPTIM1_Init 0 */
 
@@ -95,6 +98,8 @@ void HAL_LPTIM_MspDeInit(LPTIM_HandleTypeDef* lptimHandle)
 }
 
 
+/* USER CODE BEGIN 1 */
+
 void flag_Toggle(int *flag){
 
 	if (*flag==1) *flag=0; else *flag=1;
@@ -102,24 +107,29 @@ void flag_Toggle(int *flag){
 
 }
 
-/* USER CODE BEGIN 1 */
+
 void USER_LPTIM_IRQHandler (LPTIM_HandleTypeDef *hlptim) {
 
-	static int i=1;
-	//todo: check SMS status every cycle
-	//if sms is recieved, set a flag
+	//static int cnt=0;
+	static int testCnt=0;
 
-	i++;
 
-	if (i%1==0) {
-		BSP_LED_Toggle(LED3);
-		flag_Toggle(&timerFlag);
+
+	if(++testCnt==2) {
+		if (timeout==communicationPending)
+			timeout=communicationFail;
+	}
+	if(++testCnt==4) {
+		if (timeout==communicationFail)
+			timeout=communicationHardFail;
 	}
 
-	if (i%5==0){
-		timeout=0;
-		SMS=1;
-		USART2_Debug("LPTIM sleep! \r\n");
+	//BSP_LED_Toggle(LED3);
+
+
+
+	if (sleepOK==1){
+		USART2_Debug("LPTIM sleep!");
 
 		HAL_SuspendTick();
 

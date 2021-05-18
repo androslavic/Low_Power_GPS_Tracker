@@ -1,48 +1,64 @@
-/**
-  ******************************************************************************
-  * @file    gpio.c
-  * @brief   This file provides code for the configuration
-  *          of all used GPIO pins.
-  ******************************************************************************
-  * @attention
-  *
-  * <h2><center>&copy; Copyright (c) 2021 STMicroelectronics.
-  * All rights reserved.</center></h2>
-  *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
-  *
-  ******************************************************************************
-  */
 
-/* Includes ------------------------------------------------------------------*/
 #include "gpio.h"
 
-/* USER CODE BEGIN 0 */
-
-/* USER CODE END 0 */
-
-/*----------------------------------------------------------------------------*/
-/* Configure GPIO                                                             */
-/*----------------------------------------------------------------------------*/
-/* USER CODE BEGIN 1 */
-
-/* USER CODE END 1 */
-
-/** Pinout Configuration
-*/
 void MX_GPIO_Init(void)
-{
+ {
 
-  /* GPIO Ports Clock Enable */
-  __HAL_RCC_GPIOA_CLK_ENABLE();
+  GPIO_InitTypeDef GPIO_InitStruct = {0};
 
-}
+   /* GPIO Ports Clock Enable */
+   __HAL_RCC_GPIOA_CLK_ENABLE();
+
+  /*Configure GPIO pin Output Level */
+   HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_SET);
+   HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_SET);
+
+  /*Configure GPIO pin : PA1 */
+  GPIO_InitStruct.Pin = GPIO_PIN_1;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+
+	//Pin 5 mapped to Pin4 on develompment board
+
+  /*Configure GPIO pin : PA5 */
+  GPIO_InitStruct.Pin = GPIO_PIN_5;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+
+
+  /* EXTI interrupt init*/
+  HAL_NVIC_SetPriority(EXTI4_15_IRQn, 1, 1);
+  HAL_NVIC_EnableIRQ(EXTI4_15_IRQn);
+
+ }
 
 /* USER CODE BEGIN 2 */
 
-/* USER CODE END 2 */
 
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
+
+void HAL_GPIO_EXTI_Callback (uint16_t GPIO_Pin){
+
+
+	HAL_NVIC_DisableIRQ(EXTI4_15_IRQn);
+
+	//Pin 5 mapped to Pin4 on develompment board
+		if (GPIO_Pin==GPIO_PIN_5){
+		    BSP_LED_Toggle(LED3);
+			USART2_Debug("GPIO pin5!");
+			SMS=SMS_recieved;
+		}
+	HAL_NVIC_EnableIRQ(EXTI4_15_IRQn);
+
+}
+
+void USER_GPIO_EXTI_IRQHandler(uint16_t GPIO_Pin){
+
+
+}
+
+
+/* USER CODE END 2 */

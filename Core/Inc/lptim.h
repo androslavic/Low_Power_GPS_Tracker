@@ -40,16 +40,21 @@ int timerFlag;
 extern LPTIM_HandleTypeDef hlptim1;
 
 /* USER CODE BEGIN Private defines */
-
+int loc;
+int sleepOK;
+int timeout;
 /* USER CODE END Private defines */
 
 void MX_LPTIM1_Init(void);
-void USER_LPTIM_IRQHandler (LPTIM_HandleTypeDef *hlptim);
-void flag_Toggle (int *flag);
+
 
 /* USER CODE BEGIN Prototypes */
 extern int timerFlag;
 extern int timeout;
+extern int loc;
+extern int sleepOK;
+void USER_LPTIM_IRQHandler (LPTIM_HandleTypeDef *hlptim);
+void flag_Toggle (int *flag);
 /* USER CODE END Prototypes */
 
 #ifdef __cplusplus
