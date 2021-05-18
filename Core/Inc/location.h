@@ -17,7 +17,8 @@ location parseLocation (int cnt,char *string,location location);
 
 void setLocationFlag(int *locationFlag);
 
-location checkLocation(int *locationFlag,char *str);
+void checkLocation(int *locationFlag,char *str);
 
+extern location locationStruct;
 
 #endif

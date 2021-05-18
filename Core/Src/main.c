@@ -3,6 +3,7 @@
 
 
 
+location locationStruct={1,2,'a',3,4,'b'};
 
 
 int main(void)

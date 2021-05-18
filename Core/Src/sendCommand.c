@@ -3,6 +3,16 @@
 void sendCommand (char *str){
 
 
+	  if (strstr(str,"aaloc")) {
+
+		  cleanBuffer(str);
+		  sprintf(locationBuffer,"\r\n%2d.%4d %c, %2d.%4d %c\r\n",
+				  locationStruct.latitude1,locationStruct.latitude2,locationStruct.lat,
+				  locationStruct.longitude1,locationStruct.longitude2,locationStruct.lon);
+		  USART2_SendString(locationBuffer);
+
+
+	  }
 
 	  if (strstr(str,"aacb")) {
 		  cleanBuffer(str);
