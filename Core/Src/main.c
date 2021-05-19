@@ -2,9 +2,9 @@
 #include "main.h"
 
 
-
-location locationStruct={1,2,'a',3,4,'b'};
-
+//dummy initial location
+location locationStruct={44,8732,'N',13,8502,'E'};
+message messageStruct={"+385955189053","Andro"};
 
 int main(void)
 {
@@ -40,7 +40,7 @@ int main(void)
 
   while (1)
   {
-		  //checkSMS();
+		  checkSMS();
 		  LPUART_handler(buffer2);
 		  USART2_handler(buffer1);
 	  }
@@ -52,5 +52,9 @@ int main(void)
 
 
 
+/*todo:
+-SLEEP/STOP mode enable?
+-READ/SEND messages
+*/
 
 

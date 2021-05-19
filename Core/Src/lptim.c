@@ -107,19 +107,14 @@ void flag_Toggle(int *flag){
 
 void USER_LPTIM_IRQHandler (LPTIM_HandleTypeDef *hlptim) {
 
-	//static int cnt=0;
-	static int testCnt=0;
-
-
-
-	if(++testCnt==2) {
-		if (timeout==communicationPending)
-			timeout=communicationFail;
-	}
-	if(++testCnt==4) {
-		if (timeout==communicationFail)
-			timeout=communicationHardFail;
-	}
+//	static int testCnt=0;
+//
+//	if(++testCnt==2) {
+//
+//	}
+//	if(++testCnt==4) {
+//
+//	}
 
 	BSP_LED_Toggle(LED3);
 

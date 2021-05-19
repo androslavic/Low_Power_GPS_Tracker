@@ -4,7 +4,7 @@ void sendCommand (char *str){
 
 
 	  //clean buffer
-	  if (strstr(str,"aacb"))  { cleanBuffer(str);USART2_SendString(str);}
+	  if (strstr(str,"aacb"))  { cleanBuffer(str);USART2_SendString(str);LPUART1_SendString(str);}
 
 	  //sms commands
 	  if (strstr(str,"aass0")) { cleanBuffer(str); SMS=SMS_waiting;}
@@ -46,6 +46,8 @@ void sendCommand (char *str){
 	  // battery status
 	  if (strstr(str,"aabs")) {strcpy(str,"\r\nAT+CBC\r\n"); LPUART1_SendString(str);}
 
+	  // reject call
+	  if (strstr(str,"ath")) {strcpy(str,"\r\nATH\r\n"); LPUART1_SendString(str);}
 
 	  //enter SLEEP mode
 	  if (strstr(str,"aasss")) {

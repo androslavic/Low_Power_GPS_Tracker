@@ -3,6 +3,7 @@
 void processMessage(char *str){
 
 	static int locationFlag=0;
+	static int messageFlag=0;
 
 	//todo: implement action for not fix,2d fix,3d fix
 	  if (strstr(str,"CGPSSTATUS")) {
@@ -48,31 +49,27 @@ void processMessage(char *str){
 		  setLocationFlag(&locationFlag);
 	  }
 
-	  //dummy implemetacija
-	  if (strstr(str,"SMS-lalallala")) {
-		  USART2_SendString(str);
-		  //procitaj sms
-		  //if (sms==gps)
-		  // pali power
-		  // warm reset
-		  // loop sa CGPSSTATUS  .....to ide ova prva funkcija
+	  if (strstr(str,"AT+CMGL=\"REC UNREAD\"")) {
+
+		  setMessageFlag(&messageFlag);
 	  }
 
 	  if (strstr(str,"RING")) {
-		  USART2_SendString("zvoni mi...");
-		  USART2_SendString("mobilni");
-		  USART2_SendString("te amo");
-		  USART2_SendString("te amooooo");
-		  //procitaj sms
-		  //if (sms==gps)
-		  // pali power
-		  // warm reset
-		  // loop sa CGPSSTATUS  .....to ide ova prva funkcija
+		  USART2_SendString(str);
+
+		  //todo: pokreni rutinu isto ko i za SMS
+
+		  // reject call
+		  sendCommand ("ath");
+
+		  sendLocation(phoneNumber);
+
 	  }
 
 	  if (strstr(str,"OK")) {
 
 		  checkLocation(&locationFlag,str);
+		  checkMessage(&messageFlag,str);
 		  USART2_SendString(str);
 		  USART2_SendString("\r\n");
 

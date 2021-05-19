@@ -16,7 +16,6 @@ extern "C" {
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "location.h"
 #include "communication.h"
 #include "sms.h"
 #include "processing.h"
