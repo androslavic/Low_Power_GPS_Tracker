@@ -5,7 +5,6 @@
 
 void checkSMS(void){
 
-//	todo: connect SMS variable to SMS info / interrupt
 	char buffer[BUFSIZE]={'\0'};
 	char str[BUFSIZE]={'\0'};
 
@@ -24,7 +23,9 @@ void checkSMS(void){
 	}
 
 
-	if(strstr(buffer,"GPS")) sendLocation(phoneNumber);
+	if(strstr(buffer,"GPS"));
+
+	sendLocation(phoneNumber);
 
 
 
@@ -32,7 +33,37 @@ void checkSMS(void){
 
 void sendLocation(char *number){
 
-	int i;
+	char var[20];
+	char c;
+
+	USART2_Debug(callStruct.phone);
+	USART2_Debug(messageStruct.phone);
+	HAL_Delay(1000);
+
+	while (LPUART1_Dequeue (&c) != 0);
+
+	LPUART1_SendString("\r\nAT+CMGS=\"");
+	LPUART1_SendString("+385955189053");
+	LPUART1_SendString("\"\r\n");
+
+	HAL_Delay(2000);
+
+
+	LPUART1_SendString(itoa(locationStruct.latitude1,var,10));
+	LPUART1_SendChar('.');
+	LPUART1_SendString(itoa(locationStruct.latitude2,var,10));
+	LPUART1_SendChar(' ');
+	LPUART1_SendChar(locationStruct.lat);
+	LPUART1_SendChar(',');
+	LPUART1_SendString(itoa(locationStruct.longitude1,var,10));
+	LPUART1_SendChar('.');
+	LPUART1_SendString(itoa(locationStruct.longitude2,var,10));
+	LPUART1_SendChar(' ');
+	LPUART1_SendChar(locationStruct.lon);
+
+	LPUART1_SendChar(26);
+
+	HAL_Delay(1000);
 
 }
 

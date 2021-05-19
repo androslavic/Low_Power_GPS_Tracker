@@ -6,6 +6,7 @@ void processMessage(char *str);
 
 char locationBuffer[100];
 char messageBuffer[100];
+char callBuffer[100];
 char auxBuffer[100];
 char phoneNumber[100];
 

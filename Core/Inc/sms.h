@@ -21,6 +21,12 @@ int SMS;
 extern int SMS;
 
 
+int wakeup;
+
+extern int wakeup;
+
+
 extern message messageStruct;
 
 #endif
+

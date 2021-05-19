@@ -32,6 +32,7 @@ void communicationRoutine(int status){
 	char *sim808PowerOn="AT+CGPSPWR=1\r\n";
 	char *gpsColdRestart="AT+CGPSRST=0\r\n";
 	char *textMode="AT+CMGF=1\r\n";
+	char *clip="AT+CLIP=1\r\n";
 
 	char d=0;
 	char string[20]={};
@@ -64,6 +65,10 @@ void communicationRoutine(int status){
 			LPUART_reader(buffer);
 			USART2_Debug("Enabling text mode...");
 			sendCommand(textMode);
+			HAL_Delay(100);
+			LPUART_reader(buffer);
+			USART2_Debug("Enabling clip mode...");
+			sendCommand(clip);
 			HAL_Delay(100);
 			LPUART_reader(buffer);
 			break;

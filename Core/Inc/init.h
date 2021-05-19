@@ -9,6 +9,10 @@
 #include "sysclk.h"
 #include "user.h"
 
+
+char buffer1[BUFSIZE];
+char buffer2[BUFSIZE];
+
 #endif
 
 

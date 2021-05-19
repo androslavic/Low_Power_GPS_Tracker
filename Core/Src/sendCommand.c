@@ -12,7 +12,10 @@ void sendCommand (char *str){
 	  if (strstr(str,"aass2")) { cleanBuffer(str); SMS=SMS_read;}
 	  if (strstr(str,"aass3")) { cleanBuffer(str); SMS=SMS_processed;}
 
-	  //turn on/off sim808 module with GPIO
+	  //checkmessage
+	  if (strstr(str,"aacm"))  { cleanBuffer(str);checkSMS();}
+
+	 	  //turn on/off sim808 module with GPIO
 	  if (strstr(str,"aakey")) { cleanBuffer(str); PowerOnKey();}
 
 	  //restart mcu
@@ -61,10 +64,12 @@ void sendCommand (char *str){
 	  // list of unread messages
 	  if (strstr(str,"aamlu")) {strcpy(str,"\r\nAT+CMGL=\"REC UNREAD\"\r\n"); LPUART1_SendString(str);}
 
+	  // enable call info
+	  if (strstr(str,"aaclip")) {strcpy(str,"\r\nAT+CLIP=1\r\n"); LPUART1_SendString(str);}
 
 	  //enter SLEEP mode
-	  if (strstr(str,"aasss")) {
-		  USART2_Debug("Suspend tick in 500ms");
+	  if (strstr(str,"aasleep")) {
+		  USART2_Debug("Entering SLEEP mode.");
 		  HAL_SuspendTick();
 
 		  memset(str,0,strlen(str));
@@ -72,8 +77,8 @@ void sendCommand (char *str){
 	  	  }
 
 	  //enter STOP mode
-	  if (strstr(str,"aasss")) {
-		  USART2_Debug("Suspend tick in 500ms");
+	  if (strstr(str,"aastop")) {
+		  USART2_Debug("Entering STOP mode.");
 		  HAL_SuspendTick();
 
 		  memset(str,0,strlen(str));
@@ -88,6 +93,17 @@ void sendCommand (char *str){
 				  locationStruct.latitude1,locationStruct.latitude2,locationStruct.lat,
 				  locationStruct.longitude1,locationStruct.longitude2,locationStruct.lon);
 		  USART2_SendString(locationBuffer);
+	  }
+
+	  //print phone number
+	  if (strstr(str,"aanum")) {
+
+		  cleanBuffer(str);
+
+		  USART2_SendString("Caller ID: ");
+		  sprintf(callBuffer,"\r\n %s\r\n",
+				  callStruct.phone);
+		  USART2_SendString(callBuffer);
 	  }
 
 	  //everything else, performed when pressed ENTER

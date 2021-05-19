@@ -1,5 +1,14 @@
 #include "init.h"
 
+
+location locationStruct={44,8732,'N',13,8502,'E'};
+message messageStruct={"+3859822222222","John Doe"};
+call callStruct={"+385983333333"};
+
+char buffer1[BUFSIZE]={'\0'};
+char buffer2[BUFSIZE]= {'\0'};
+
+
 void init (void) {
 
 
@@ -8,7 +17,7 @@ void init (void) {
 	  sleepOK=0;
 	  timeout=communicationPending;
 	  debug=1;
-
+	  wakeup=0;
 
 	  HAL_Init();
 

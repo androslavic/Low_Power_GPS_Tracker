@@ -21,6 +21,8 @@ extern "C" {
 #include "processing.h"
 #include "sendCommand.h"
 #include "init.h"
+#include "wakeup.h"
+#include "call.h"
 
 
 
@@ -45,6 +47,8 @@ enum SMS_routine {
 };
 
 int debug;
+
+
 
 
 #ifdef __cplusplus

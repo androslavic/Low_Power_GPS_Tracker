@@ -4,6 +4,7 @@ void processMessage(char *str){
 
 	static int locationFlag=0;
 	static int messageFlag=0;
+	static int callFlag=0;
 
 	//todo: implement action for not fix,2d fix,3d fix
 	  if (strstr(str,"CGPSSTATUS")) {
@@ -57,18 +58,22 @@ void processMessage(char *str){
 	  if (strstr(str,"RING")) {
 		  USART2_SendString(str);
 
-		  //todo: pokreni rutinu isto ko i za SMS
+		  setCallFlag(&callFlag);
+		  checkCall(&callFlag,str);
 
-		  // reject call
-		  strcpy(str,"\r\nATH\r\n");
-		  LPUART1_SendString(str);
+//		  // reject call
+//		  strcpy(str,"\r\nATH\r\n");
+//		  LPUART1_SendString(str);
 
-		  sendLocation(phoneNumber);
+	  }
+
+	  if (strstr(str,"ATH")) {
 
 	  }
 
 	  if (strstr(str,"OK")) {
 
+//		  checkCall(&callFlag,str);
 		  checkLocation(&locationFlag,str);
 		  checkMessage(&messageFlag,str);
 		  USART2_SendString(str);
@@ -76,4 +81,11 @@ void processMessage(char *str){
 
 	  }
 
+
+
+	  if (strchr(str,'\n'))  {
+
+		  USART2_SendString(str);
+
+	  }
 }
