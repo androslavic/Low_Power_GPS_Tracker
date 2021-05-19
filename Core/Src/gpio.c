@@ -48,7 +48,9 @@ void HAL_GPIO_EXTI_Callback (uint16_t GPIO_Pin){
 	//Pin 5 mapped to Pin4 on develompment board
 		if (GPIO_Pin==GPIO_PIN_5){
 		    BSP_LED_Toggle(LED3);
-			USART2_Debug("GPIO pin5!");
+			USART2_Debug("Interrupt wake-up!");
+
+
 			SMS=SMS_recieved;
 		}
 	HAL_NVIC_EnableIRQ(EXTI4_15_IRQn);

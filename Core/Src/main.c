@@ -4,7 +4,7 @@
 
 //dummy initial location
 location locationStruct={44,8732,'N',13,8502,'E'};
-message messageStruct={"+385955189053","Andro"};
+message messageStruct={"+385987654321","John Doe"};
 
 int main(void)
 {

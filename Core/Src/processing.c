@@ -33,10 +33,10 @@ void processMessage(char *str){
 		  //dummy implementation for reset call
 	  }
 
-	  // todo: provjeri tocno poruku i testiraj
+	  //dummy implementation for low-voltage call
 	  if (strstr(str,"LOW POWER")) {
 		  USART2_SendString(str);
-		  sendCommand("aaLowPower");
+		  //sendCommand("LowPower");
 	  }
 
 	  if (strstr(str,"OVER-VOLTAGE WARNING")) {
@@ -60,7 +60,8 @@ void processMessage(char *str){
 		  //todo: pokreni rutinu isto ko i za SMS
 
 		  // reject call
-		  sendCommand ("ath");
+		  strcpy(str,"\r\nATH\r\n");
+		  LPUART1_SendString(str);
 
 		  sendLocation(phoneNumber);
 

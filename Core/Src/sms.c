@@ -77,31 +77,22 @@ void checkMessage(int *messageFlag, char *str){
 message parseMessage (int cnt,char *string,message message){
 
 
+	char *pointer;
+
 	switch (cnt) {
 
-	case 5:
-		  USART2_Debug("message5");
-		break;
-	case 6:
-		  USART2_Debug("message6");
-		break;
-	case 7:
-		  USART2_Debug("message7");
-		break;
+
 	case 8:
-		  USART2_Debug("message8");
+		  strcpy(message.phone,string);
 		break;
-	case 9:
-		  USART2_Debug("message9");
+	case 11:
+		  pointer=strchr(string,'\n');
+		  strcpy(message.text,pointer+1);
 		break;
-	case 10:
-		  USART2_Debug("message10");
-		break;
+
 	default:
 		break;
 
 	}
-	USART2_SendString(string);
-
 	return message;
 }

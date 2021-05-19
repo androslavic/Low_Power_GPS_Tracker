@@ -31,13 +31,14 @@ void communicationRoutine(int status){
 	char buffer[BUFSIZE]= {'\0'};
 	char *sim808PowerOn="AT+CGPSPWR=1\r\n";
 	char *gpsColdRestart="AT+CGPSRST=0\r\n";
+	char *textMode="AT+CMGF=1\r\n";
 
 	char d=0;
 	char string[20]={};
 
 	LPUART1_SendString("AT\r\n");
 
-	HAL_Delay(100);
+	HAL_Delay(1000);
 
 	while(LPUART1_Dequeue (&d) != 0 ) {
 
@@ -53,12 +54,16 @@ void communicationRoutine(int status){
   				}
 	  		}
 		if(check) {
-			USART2_Debug("Turning sim808 power ON.");
+			USART2_Debug("Turning sim808 power ON...");
 			sendCommand(sim808PowerOn);
 			HAL_Delay(100);
 			LPUART_reader(buffer);
-			USART2_Debug("Reseting GPS module");
+			USART2_Debug("Reseting GPS module...");
 			sendCommand(gpsColdRestart);
+			HAL_Delay(100);
+			LPUART_reader(buffer);
+			USART2_Debug("Enabling text mode...");
+			sendCommand(textMode);
 			HAL_Delay(100);
 			LPUART_reader(buffer);
 			break;

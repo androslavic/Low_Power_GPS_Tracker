@@ -16,7 +16,7 @@ void sendCommand (char *str){
 	  if (strstr(str,"aakey")) { cleanBuffer(str); PowerOnKey();}
 
 	  //restart mcu
-	  if (strstr(str,"aamr")) { USART2_Debug("Restarting MCU!");  __NVIC_SystemReset();}
+	  if (strstr(str,"aarr")) { USART2_Debug("Restarting MCU!");  __NVIC_SystemReset();}
 
 	  //perform communication test
 	  if (strstr(str,"aact")) {  communicationTest();}
@@ -48,6 +48,19 @@ void sendCommand (char *str){
 
 	  // reject call
 	  if (strstr(str,"ath")) {strcpy(str,"\r\nATH\r\n"); LPUART1_SendString(str);}
+
+	  // delete message
+	  if (strstr(str,"aamd")) {strcpy(str,"\r\nAT+CMGD="); LPUART1_SendString(str);}
+
+	  // read message
+	  if (strstr(str,"aamr")) {strcpy(str,"\r\nAT+CMGR=\r\n"); LPUART1_SendString(str);}
+
+	  // list of read messages
+	  if (strstr(str,"aamlr")) {strcpy(str,"\r\nAT+CMGL=\"REC READ\"\r\n"); LPUART1_SendString(str);}
+
+	  // list of unread messages
+	  if (strstr(str,"aamlu")) {strcpy(str,"\r\nAT+CMGL=\"REC UNREAD\"\r\n"); LPUART1_SendString(str);}
+
 
 	  //enter SLEEP mode
 	  if (strstr(str,"aasss")) {
