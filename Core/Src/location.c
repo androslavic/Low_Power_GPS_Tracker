@@ -65,6 +65,7 @@ void checkLocation(int *locationFlag, char *str){
 				  locationStruct.latitude1,locationStruct.latitude2,locationStruct.lat,
 				  locationStruct.longitude1,locationStruct.longitude2,locationStruct.lon);
 		  USART2_SendString(locationBuffer);
+
 	}
 
 }

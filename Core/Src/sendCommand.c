@@ -67,6 +67,10 @@ void sendCommand (char *str){
 	  // enable call info
 	  if (strstr(str,"aaclip")) {strcpy(str,"\r\nAT+CLIP=1\r\n"); LPUART1_SendString(str);}
 
+	  // enable text mode
+	  if (strstr(str,"aatext")) {strcpy(str,"\r\nAT+CMGF=1\r\n"); LPUART1_SendString(str);}
+
+
 	  //enter SLEEP mode
 	  if (strstr(str,"aasleep")) {
 		  USART2_Debug("Entering SLEEP mode.");
@@ -100,10 +104,22 @@ void sendCommand (char *str){
 
 		  cleanBuffer(str);
 
-		  USART2_SendString("Caller ID: ");
+		  USART2_SendString("\r\nCaller ID: ");
 		  sprintf(callBuffer,"\r\n %s\r\n",
 				  callStruct.phone);
 		  USART2_SendString(callBuffer);
+
+		  USART2_SendString("\r\nMessenger ID : ");
+		  sprintf(messageBuffer,"\r\n %s\r\n",
+				  messageStruct.phone);
+		  USART2_SendString(messageBuffer);
+
+		  USART2_SendString("\r\nMessage: ");
+		  sprintf(messageBuffer,"\r\n %s\r\n",
+				  messageStruct.text);
+		  USART2_SendString(messageBuffer);
+
+
 	  }
 
 	  //everything else, performed when pressed ENTER

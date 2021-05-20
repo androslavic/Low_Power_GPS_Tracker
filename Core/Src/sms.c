@@ -5,28 +5,21 @@
 
 void checkSMS(void){
 
-	char buffer[BUFSIZE]={'\0'};
 	char str[BUFSIZE]={'\0'};
 
 
-	if (SMS==SMS_recieved){
-
+	if(SMS==SMS_recieved){
 		USART2_Debug("SMS recieved!");
 		LPUART1_SendString("AT+CMGL=\"REC UNREAD\"\r\n");
 
 		HAL_Delay(500);
 		LPUART_handler(str);
-
-		SMS=SMS_read;
-
-
+		SMS=SMS_pending;
 	}
 
-
-	if(strstr(buffer,"GPS"));
-
-	sendLocation(phoneNumber);
-
+	if(SMS==SMS_read){
+		sendLocation(phoneNumber);
+	}
 
 
 }
@@ -36,34 +29,43 @@ void sendLocation(char *number){
 	char var[20];
 	char c;
 
-	USART2_Debug(callStruct.phone);
-	USART2_Debug(messageStruct.phone);
-	HAL_Delay(1000);
 
-	while (LPUART1_Dequeue (&c) != 0);
+	USART2_Debug("aaa");
+	if (strstr(messageStruct.text,"GPS")) {
 
-	LPUART1_SendString("\r\nAT+CMGS=\"");
-	LPUART1_SendString("+385955189053");
-	LPUART1_SendString("\"\r\n");
+		USART2_Debug("sss");
 
-	HAL_Delay(2000);
+		HAL_Delay(1000);
 
 
-	LPUART1_SendString(itoa(locationStruct.latitude1,var,10));
-	LPUART1_SendChar('.');
-	LPUART1_SendString(itoa(locationStruct.latitude2,var,10));
-	LPUART1_SendChar(' ');
-	LPUART1_SendChar(locationStruct.lat);
-	LPUART1_SendChar(',');
-	LPUART1_SendString(itoa(locationStruct.longitude1,var,10));
-	LPUART1_SendChar('.');
-	LPUART1_SendString(itoa(locationStruct.longitude2,var,10));
-	LPUART1_SendChar(' ');
-	LPUART1_SendChar(locationStruct.lon);
+		while (LPUART1_Dequeue (&c) != 0);
 
-	LPUART1_SendChar(26);
+		LPUART1_SendString("\r\nAT+CMGS=");
+		LPUART1_SendString(messageStruct.phone);
+		LPUART1_SendString("\r\n");
 
-	HAL_Delay(1000);
+		HAL_Delay(2000);
+
+
+		LPUART1_SendString(itoa(locationStruct.latitude1,var,10));
+		LPUART1_SendChar('.');
+		LPUART1_SendString(itoa(locationStruct.latitude2,var,10));
+		LPUART1_SendChar(' ');
+		LPUART1_SendChar(locationStruct.lat);
+		LPUART1_SendChar(',');
+		LPUART1_SendString(itoa(locationStruct.longitude1,var,10));
+		LPUART1_SendChar('.');
+		LPUART1_SendString(itoa(locationStruct.longitude2,var,10));
+		LPUART1_SendChar(' ');
+		LPUART1_SendChar(locationStruct.lon);
+
+		LPUART1_SendChar(26);
+
+		HAL_Delay(1000);
+
+	}
+
+	SMS=SMS_processed;
 
 }
 
@@ -95,10 +97,7 @@ void checkMessage(int *messageFlag, char *str){
 		  }
 
 		*messageFlag=0;
-
-		  sprintf(messageBuffer,"\r\n%s %s\r\n",
-				  messageStruct.phone,messageStruct.text);
-		  USART2_SendString(messageBuffer);
+		SMS=SMS_read;
 	}
 
 }

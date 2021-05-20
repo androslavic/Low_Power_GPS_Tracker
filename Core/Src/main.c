@@ -13,10 +13,10 @@ int main(void)
 
   	init();
 
-  	communicationTest();
+  	//communicationTest();
 
 
-	USART2_Debug("Start while(1)");
+	USART2_Debug("Start!");
 
 
   while (1)

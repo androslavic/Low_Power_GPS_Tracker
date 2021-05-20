@@ -55,21 +55,21 @@ void processMessage(char *str){
 		  setMessageFlag(&messageFlag);
 	  }
 
-	  if (strstr(str,"RING")) {
-		  USART2_SendString(str);
-
-		  setCallFlag(&callFlag);
-		  checkCall(&callFlag,str);
+//	  if (strstr(str,"RING")) {
+//		  USART2_SendString(str);
+//
+//		  setCallFlag(&callFlag);
+//		  checkCall(&callFlag,str);
 
 //		  // reject call
 //		  strcpy(str,"\r\nATH\r\n");
 //		  LPUART1_SendString(str);
-
-	  }
-
-	  if (strstr(str,"ATH")) {
-
-	  }
+//
+//	  }
+//
+//	  if (strstr(str,"ATH")) {
+//
+//	  }
 
 	  if (strstr(str,"OK")) {
 
@@ -83,9 +83,4 @@ void processMessage(char *str){
 
 
 
-	  if (strchr(str,'\n'))  {
-
-		  USART2_SendString(str);
-
-	  }
 }

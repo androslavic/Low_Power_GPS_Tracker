@@ -2,7 +2,7 @@
 
 
 location locationStruct={44,8732,'N',13,8502,'E'};
-message messageStruct={"+3859822222222","John Doe"};
+message messageStruct={"+3859822222222","messageee"};
 call callStruct={"+385983333333"};
 
 char buffer1[BUFSIZE]={'\0'};

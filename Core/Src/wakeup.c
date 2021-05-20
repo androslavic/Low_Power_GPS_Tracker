@@ -5,12 +5,14 @@ void wakeup_handler(int wakeUp){
 
 	if (wakeUp){
 
-		if (1)
 		checkSMS();
 
+		if (SMS==SMS_processed){
+			wakeup=0;
+			//todo: back to sleep!!
+		}
 	}
 
-	wakeup=0;
 
 }
 
