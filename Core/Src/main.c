@@ -2,8 +2,6 @@
 #include "main.h"
 
 
-//dummy initial location
-
 
 int main(void)
 {

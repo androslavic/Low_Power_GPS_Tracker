@@ -1,7 +1,7 @@
 #ifndef __USER_H__
 #define __USER_H__
 
-#define BUFSIZE 200
+#define BUFSIZE 1000
 
 #include "main.h"
 

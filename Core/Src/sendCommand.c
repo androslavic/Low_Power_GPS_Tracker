@@ -3,6 +3,43 @@
 void sendCommand (char *str){
 
 
+	  if (strstr(str,"help")) {
+		  cleanBuffer(str);
+
+		  USART2_SendString  ("aacb  : clean buffer");
+		  USART2_SendString  ("aass0 : SMS=SMS_waiting;");
+		  USART2_SendString  ("aass1 : SMS=SMS_recieved;");
+		  USART2_SendString  ("aass2 : SMS=SMS_read;");
+		  USART2_SendString  ("aass3 : SMS=SMS_waiting;");
+		  USART2_SendString  ("aacm  :  check SMS");
+		  USART2_SendString  ("aakey : turn on/off sim808 module with GPIO");
+		  USART2_SendString  ("aarr  : restart mcu");
+		  USART2_SendString  ("aact  : communication test");
+		  USART2_SendString  ("aaoff : turn off SIM808 mobudle");
+		  USART2_SendString  ("aaoff : turn off SIM808 mobudle");
+		  USART2_SendString  ("aags : location status");
+		  USART2_SendString  ("aap? : power status");
+		  USART2_SendString  ("aagp1 : power on");
+		  USART2_SendString  ("aagp0 : power off");
+		  USART2_SendString  ("aagr0 : cold restart");
+		  USART2_SendString  ("aagr1 : warm restart");
+		  USART2_SendString  ("aagi : gps formated info");
+		  USART2_SendString  ("aabs : battery status");
+		  USART2_SendString  ("ath : reject call");
+		//  USART2_SendString  ("aamd : delete message (add number)");
+		//  USART2_SendString  ("aamr : read message");
+		// USART2_SendString  ("aamlr : list of messages");
+		  USART2_SendString  ("aamlu : list of unread messages");
+		  USART2_SendString  ("aaclip : enable call info");
+		  USART2_SendString  ("aatext : enable text mode");
+		  USART2_SendString  ("aasleep : enter sleep mode");
+		  USART2_SendString  ("aastop : enter stop mode");
+		  USART2_SendString  ("aaloc : print location");
+		  USART2_SendString  ("aanum : print phone number");
+
+	  }
+
+
 	  //clean buffer
 	  if (strstr(str,"aacb"))  { cleanBuffer(str);USART2_SendString(str);LPUART1_SendString(str);}
 
