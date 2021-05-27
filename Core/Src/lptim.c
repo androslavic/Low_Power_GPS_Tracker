@@ -107,16 +107,11 @@ void flag_Toggle(int *flag){
 
 void USER_LPTIM_IRQHandler (LPTIM_HandleTypeDef *hlptim) {
 
-//	static int testCnt=0;
-//
-//	if(++testCnt==2) {
-//
-//	}
-//	if(++testCnt==4) {
-//
-//	}
+
 
 	BSP_LED_Toggle(LED3);
+
+	interruptTIM++;
 
 
 

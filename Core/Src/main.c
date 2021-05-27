@@ -11,8 +11,7 @@ int main(void)
 
   	init();
 
-  	//communicationTest();
-
+  	communicationTest();
 
 	USART2_Debug("Start!");
 

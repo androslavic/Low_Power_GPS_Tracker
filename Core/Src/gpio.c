@@ -45,15 +45,7 @@ void HAL_GPIO_EXTI_Callback (uint16_t GPIO_Pin){
 
 	HAL_NVIC_DisableIRQ(EXTI4_15_IRQn);
 
-	//Pin 5 mapped to Pin4 on develompment board
-		if (GPIO_Pin==GPIO_PIN_5){
-		    BSP_LED_Toggle(LED3);
-			wakeup=1;
-			USART2_Debug("Interrupt wake-up!");
-
-			// what about phone call?
-			SMS=SMS_recieved;
-		}
+	USER_GPIO_EXTI_IRQHandler(GPIO_Pin);
 
 	HAL_NVIC_EnableIRQ(EXTI4_15_IRQn);
 
@@ -61,7 +53,15 @@ void HAL_GPIO_EXTI_Callback (uint16_t GPIO_Pin){
 
 void USER_GPIO_EXTI_IRQHandler(uint16_t GPIO_Pin){
 
-
+	//Pin 5 mapped to Pin4 on develompment board
+		if (GPIO_Pin==GPIO_PIN_5){
+		    BSP_LED_Toggle(LED3);
+		    if (wakeup==0){
+		    	wakeup=1;
+		    	// what about phone call?
+		    	SMS=SMS_recieved;
+		    }
+		}
 }
 
 

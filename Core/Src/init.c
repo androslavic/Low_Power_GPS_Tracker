@@ -18,6 +18,9 @@ void init (void) {
 	  timeout=communicationPending;
 	  debug=1;
 	  wakeup=0;
+	  interruptSet=0;
+	  interruptTIM=0;
+
 
 	  HAL_Init();
 

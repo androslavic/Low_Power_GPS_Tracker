@@ -17,3 +17,10 @@ char buffer2[BUFSIZE];
 
 
 void init (void);
+
+
+int loc;
+int sleepOK;
+int timeout;
+int interruptSet;
+int interruptTIM;

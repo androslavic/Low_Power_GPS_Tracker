@@ -18,6 +18,7 @@ void checkSMS(void){
 	}
 
 	if(SMS==SMS_read){
+		USART2_Debug("SMS read!");
 		sendLocation(phoneNumber);
 	}
 
@@ -30,10 +31,9 @@ void sendLocation(char *number){
 	char c;
 
 
-	USART2_Debug("aaa");
 	if (strstr(messageStruct.text,"GPS")) {
 
-		USART2_Debug("sss");
+		USART2_Debug("messageStruct.text==GPS");
 
 		HAL_Delay(1000);
 
@@ -97,6 +97,7 @@ void checkMessage(int *messageFlag, char *str){
 		  }
 
 		*messageFlag=0;
+
 		SMS=SMS_read;
 	}
 
@@ -109,6 +110,7 @@ message parseMessage (int cnt,char *string,message message){
 
 	char *pointer;
 
+	USART2_Debug(string);
 	switch (cnt) {
 
 
@@ -118,6 +120,8 @@ message parseMessage (int cnt,char *string,message message){
 	case 11:
 		  pointer=strchr(string,'\n');
 		  strcpy(message.text,pointer+1);
+		  USART2_Debug("message.text :");
+		  USART2_SendString(message.text);
 		break;
 
 	default:

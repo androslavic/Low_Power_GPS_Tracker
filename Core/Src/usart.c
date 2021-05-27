@@ -278,6 +278,13 @@ void  USART2_SendString(char *c) {
 	}while (c[i]!=0);
 }
 
+
+void  USART2_SendInfo(char *c) {
+
+	USART2_SendString(c);
+	USART2_SendString("\r\n");
+}
+
 void  USART2_Debug(char *c) {
 
 	if (debug){
@@ -316,9 +323,9 @@ void USART2_handler(char *str){
 
 	if (USART2_Dequeue (&c) != 0) {
 
-		  USART2_SendChar(c);
-		  print2string(str,c);
-		  sendCommand(str);
+		 	 USART2_SendChar(c);
+		 	 print2string(str,c);
+		 	 sendCommand(str);
 	}
 }
 
@@ -329,8 +336,8 @@ void LPUART_handler(char *str){
 
 	if (LPUART1_Dequeue (&c) != 0) {
 
-		print2string(str,c);
-		processMessage(str);
+			print2string(str,c);
+			processMessage(str);
 	  }
 }
 

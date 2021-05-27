@@ -5,43 +5,45 @@ void sendCommand (char *str){
 
 	  if (strstr(str,"help")) {
 		  cleanBuffer(str);
+		  USART2_SendString("\r\n");
 
-		  USART2_SendString  ("aacb  : clean buffer");
-		  USART2_SendString  ("aass0 : SMS=SMS_waiting;");
-		  USART2_SendString  ("aass1 : SMS=SMS_recieved;");
-		  USART2_SendString  ("aass2 : SMS=SMS_read;");
-		  USART2_SendString  ("aass3 : SMS=SMS_waiting;");
-		  USART2_SendString  ("aacm  :  check SMS");
-		  USART2_SendString  ("aakey : turn on/off sim808 module with GPIO");
-		  USART2_SendString  ("aarr  : restart mcu");
-		  USART2_SendString  ("aact  : communication test");
-		  USART2_SendString  ("aaoff : turn off SIM808 mobudle");
-		  USART2_SendString  ("aaoff : turn off SIM808 mobudle");
-		  USART2_SendString  ("aags : location status");
-		  USART2_SendString  ("aap? : power status");
-		  USART2_SendString  ("aagp1 : power on");
-		  USART2_SendString  ("aagp0 : power off");
-		  USART2_SendString  ("aagr0 : cold restart");
-		  USART2_SendString  ("aagr1 : warm restart");
-		  USART2_SendString  ("aagi : gps formated info");
-		  USART2_SendString  ("aabs : battery status");
-		  USART2_SendString  ("ath : reject call");
-		//  USART2_SendString  ("aamd : delete message (add number)");
-		//  USART2_SendString  ("aamr : read message");
-		// USART2_SendString  ("aamlr : list of messages");
-		  USART2_SendString  ("aamlu : list of unread messages");
-		  USART2_SendString  ("aaclip : enable call info");
-		  USART2_SendString  ("aatext : enable text mode");
-		  USART2_SendString  ("aasleep : enter sleep mode");
-		  USART2_SendString  ("aastop : enter stop mode");
-		  USART2_SendString  ("aaloc : print location");
-		  USART2_SendString  ("aanum : print phone number");
+		  USART2_SendInfo  ("aacb  : clean buffer");
+		  USART2_SendInfo  ("aass0 : SMS=SMS_waiting;");
+		  USART2_SendInfo  ("aass1 : SMS=SMS_recieved;");
+		  USART2_SendInfo  ("aass2 : SMS=SMS_read;");
+		  USART2_SendInfo  ("aass3 : SMS=SMS_waiting;");
+		  USART2_SendInfo  ("aacm  :  check SMS");
+		  USART2_SendInfo  ("aakey : turn on/off sim808 module with GPIO");
+		  USART2_SendInfo  ("aarr  : restart mcu");
+		  USART2_SendInfo  ("aact  : communication test");
+		  USART2_SendInfo  ("aaoff : turn off SIM808 mobudle");
+		  USART2_SendInfo  ("aaoff : turn off SIM808 mobudle");
+		  USART2_SendInfo  ("aags : location status");
+		  USART2_SendInfo  ("aap? : power status");
+		  USART2_SendInfo  ("aagp1 : power on");
+		  USART2_SendInfo  ("aagp0 : power off");
+		  USART2_SendInfo  ("aagr0 : cold restart");
+		  USART2_SendInfo  ("aagr1 : warm restart");
+		  USART2_SendInfo  ("aagi : gps formated info");
+		  USART2_SendInfo  ("aabs : battery status");
+		  USART2_SendInfo  ("ath : reject call");
+		//  USART2_SendInfo  ("aamd : delete message (add number)");
+		//  USART2_SendInfo  ("aamr : read message");
+		// USART2_SendInfo  ("aamlr : list of messages");
+		  USART2_SendInfo  ("aamlu : list of unread messages");
+		  USART2_SendInfo  ("aaclip : enable call info");
+		  USART2_SendInfo  ("aatext : enable text mode");
+		  USART2_SendInfo  ("aasleep : enter sleep mode");
+		  USART2_SendInfo  ("aastop : enter stop mode");
+		  USART2_SendInfo  ("aaloc : print location");
+		  USART2_SendInfo  ("aanum : print phone number");
+		  USART2_SendInfo  ("aastm : send test message");
 
 	  }
 
 
 	  //clean buffer
-	  if (strstr(str,"aacb"))  { cleanBuffer(str);USART2_SendString(str);LPUART1_SendString(str);}
+	  if (strstr(str,"aacb"))  { cleanBuffer(str);USART2_SendInfo(str);LPUART1_SendString(str);}
 
 	  //sms commands
 	  if (strstr(str,"aass0")) { cleanBuffer(str); SMS=SMS_waiting;}
@@ -156,6 +158,28 @@ void sendCommand (char *str){
 				  messageStruct.text);
 		  USART2_SendString(messageBuffer);
 
+
+	  }
+
+	  // send test message
+	  if (strstr(str,"aastn")) {
+
+		  cleanBuffer(str);
+
+	  }
+
+
+	  if (strstr(str,"aabb1")) {
+
+		  cleanBuffer(str);
+		  USART2_SendString(buffer1);
+
+	  }
+
+	  if (strstr(str,"aabb2")) {
+
+		  cleanBuffer(str);
+		  USART2_SendString(buffer2);
 
 	  }
 

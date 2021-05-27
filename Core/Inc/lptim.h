@@ -40,9 +40,7 @@ int timerFlag;
 extern LPTIM_HandleTypeDef hlptim1;
 
 /* USER CODE BEGIN Private defines */
-int loc;
-int sleepOK;
-int timeout;
+
 /* USER CODE END Private defines */
 
 void MX_LPTIM1_Init(void);
