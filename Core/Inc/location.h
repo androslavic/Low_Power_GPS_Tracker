@@ -19,6 +19,8 @@ void setLocationFlag(int *locationFlag);
 
 void checkLocation(int *locationFlag,char *str);
 
+void location_handler(void);
+
 extern location locationStruct;
 
 #endif

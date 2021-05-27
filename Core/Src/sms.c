@@ -13,13 +13,16 @@ void checkSMS(void){
 		LPUART1_SendString("AT+CMGL=\"REC UNREAD\"\r\n");
 
 		HAL_Delay(500);
-		LPUART_handler(str);
 		SMS=SMS_pending;
 	}
 
 	if(SMS==SMS_read){
-		USART2_Debug("SMS read!");
-		sendLocation(phoneNumber);
+
+		if (strstr(messageStruct.text,"GPS")) {
+
+		findLocation=1;
+		}
+		else SMS=SMS_processed;
 	}
 
 
@@ -31,17 +34,14 @@ void sendLocation(char *number){
 	char c;
 
 
-	if (strstr(messageStruct.text,"GPS")) {
-
-		USART2_Debug("messageStruct.text==GPS");
-
 		HAL_Delay(1000);
 
 
 		while (LPUART1_Dequeue (&c) != 0);
 
 		LPUART1_SendString("\r\nAT+CMGS=");
-		LPUART1_SendString(messageStruct.phone);
+		strcpy(var,messageStruct.phone);
+		LPUART1_SendString(var);
 		LPUART1_SendString("\r\n");
 
 		HAL_Delay(2000);
@@ -63,9 +63,8 @@ void sendLocation(char *number){
 
 		HAL_Delay(1000);
 
-	}
 
-	SMS=SMS_processed;
+		SMS=SMS_processed;
 
 }
 
@@ -82,7 +81,11 @@ void checkMessage(int *messageFlag, char *str){
 	char * string;
 	int cnt=0;
 
+
+
 	strcpy(auxBuffer,str);
+
+
 
 	if (*messageFlag){
 
@@ -110,18 +113,17 @@ message parseMessage (int cnt,char *string,message message){
 
 	char *pointer;
 
-	USART2_Debug(string);
 	switch (cnt) {
 
 
-	case 8:
+	case 6:
 		  strcpy(message.phone,string);
+		  USART2_Debug(string);
 		break;
-	case 11:
+	case 9:
 		  pointer=strchr(string,'\n');
-		  strcpy(message.text,pointer+1);
-		  USART2_Debug("message.text :");
-		  USART2_SendString(message.text);
+		  strncpy(message.text,pointer+1,3);
+		  USART2_Debug(pointer+1);
 		break;
 
 	default:

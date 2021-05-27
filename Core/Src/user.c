@@ -58,3 +58,17 @@ void cleanBuffer(char *buffer){
     }
 
 }
+
+
+void removechar( char str[], char t ){
+    int i,j;
+    i = 0;
+    while(i<strlen(str))
+    {
+        if (str[i]==t)
+        {
+            for (j=i; j<strlen(str); j++)
+                str[j]=str[j+1];
+        } else i++;
+    }
+}

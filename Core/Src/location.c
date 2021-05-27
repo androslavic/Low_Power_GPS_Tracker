@@ -69,3 +69,30 @@ void checkLocation(int *locationFlag, char *str){
 	}
 
 }
+
+
+
+void location_handler(void){
+
+	static int i;
+
+	if (findLocation){
+
+		if (interruptTIM!=i){
+		  // location status
+			i++;
+			USART2_SendString("Location tracing...\r\n");
+			LPUART1_SendString("\r\nAT+CGPSSTATUS?\r\n");
+			if (loc==3){
+				findLocation=0;
+				USART2_SendString("Location 3D Fix");
+				sendLocation(phoneNumber);
+			}
+		}
+		i=interruptTIM;
+
+	}
+
+}
+
+

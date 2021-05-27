@@ -23,7 +23,6 @@ void checkCall(int *callFlag, char *str){
 	}
 
 	strcpy(auxBuffer,str);
-	USART2_SendString(str);
 
 	if (*callFlag){
 

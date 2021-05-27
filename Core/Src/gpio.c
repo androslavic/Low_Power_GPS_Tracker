@@ -57,9 +57,9 @@ void USER_GPIO_EXTI_IRQHandler(uint16_t GPIO_Pin){
 		if (GPIO_Pin==GPIO_PIN_5){
 		    BSP_LED_Toggle(LED3);
 		    if (wakeup==0){
+		    	SMS=SMS_recieved;
 		    	wakeup=1;
 		    	// what about phone call?
-		    	SMS=SMS_recieved;
 		    }
 		}
 }

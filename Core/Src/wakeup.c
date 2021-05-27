@@ -3,28 +3,39 @@
 void wakeup_handler(int wakeUp){
 
 
-	if (wakeUp){
 
-		HAL_Delay(1000);
+	char *sim808PowerOn="AT+CGPSPWR=1\r\n";
+	char *gpsWarmRestart="AT+CGPSRST=1\r\n";
+	char buffer[BUFSIZE]= {'\0'};
+	static int awake=0;
 
-    	USART2_Debug("Interrupt wake-up!");
-		HAL_Delay(500);
 
-		LPUART1_SendString("\r\nAT\r\n");
+	if (wakeup){
 
-		HAL_Delay(50);
+		if(!awake){
 
-		wakeup=0;
+			sendCommand(sim808PowerOn);
+			HAL_Delay(100);
+			LPUART_reader(buffer);
+			sendCommand(gpsWarmRestart);
+			HAL_Delay(100);
+			LPUART_reader(buffer);
+			awake=1;
+		}
 
-		//checkSMS();
+
+		checkSMS();
+
 
 		if (SMS==SMS_processed){
 			wakeup=0;
+			awake=0;
+			USART2_Debug("SMS processed!");
 			//todo: back to sleep!!
 		}
 
 	}
 
-
 }
+
 

@@ -1,7 +1,7 @@
 #ifndef __USER_H__
 #define __USER_H__
 
-#define BUFSIZE 1000
+#define BUFSIZE 500
 
 #include "main.h"
 
@@ -13,5 +13,6 @@ void print2string (char *str, char c);
 
 void PowerOnKey (void);
 
+void removechar( char str[], char t );
 
 #endif

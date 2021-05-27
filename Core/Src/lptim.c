@@ -109,7 +109,7 @@ void USER_LPTIM_IRQHandler (LPTIM_HandleTypeDef *hlptim) {
 
 
 
-	BSP_LED_Toggle(LED3);
+	//BSP_LED_Toggle(LED3);
 
 	interruptTIM++;
 

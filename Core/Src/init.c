@@ -2,16 +2,21 @@
 
 
 location locationStruct={44,8732,'N',13,8502,'E'};
-message messageStruct={"+3859822222222","messageee"};
+message messageStruct={"+3859822222222","msg"};
 call callStruct={"+385983333333"};
 
 char buffer1[BUFSIZE]={'\0'};
 char buffer2[BUFSIZE]= {'\0'};
 
 
+
+
 void init (void) {
 
 
+	  locationFlag=0;
+	  messageFlag=0;
+	  callFlag=0;
 	  SMS=SMS_waiting;
 	  loc=0;
 	  sleepOK=0;
@@ -20,6 +25,7 @@ void init (void) {
 	  wakeup=0;
 	  interruptSet=0;
 	  interruptTIM=0;
+	  findLocation=0;
 
 
 	  HAL_Init();

@@ -21,7 +21,9 @@ int main(void)
 		  LPUART_handler(buffer2);
 		  USART2_handler(buffer1);
 		  wakeup_handler(wakeup);
-	  }
+		  location_handler();
+
+  }
 
 
   }

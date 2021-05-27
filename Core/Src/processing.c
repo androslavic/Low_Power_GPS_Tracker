@@ -2,10 +2,10 @@
 
 void processMessage(char *str){
 
-	static int locationFlag=0;
-	static int messageFlag=0;
-	static int callFlag=0;
-	char *var;
+
+
+
+
 
 	//todo: implement action for not fix,2d fix,3d fix
 	  if (strstr(str,"CGPSSTATUS")) {
@@ -54,14 +54,14 @@ void processMessage(char *str){
 	  if (strstr(str,"AT+CMGL=\"REC UNREAD\"")) {
 
 		  setMessageFlag(&messageFlag);
+
 	  }
 
 	  if (strstr(str,"RING")) {
 
 		  USART2_SendString(str);
 
-//		  setCallFlag(&callFlag);
-//		  checkCall(&callFlag,str);
+		  setCallFlag(&callFlag);
 
 		  // reject call
 		  strcpy(str,"\r\nATH\r\n");
@@ -75,7 +75,7 @@ void processMessage(char *str){
 
 	  if (strstr(str,"OK")) {
 
-//		  checkCall(&callFlag,str);
+		  checkCall(&callFlag,str);
 		  checkLocation(&locationFlag,str);
 		  checkMessage(&messageFlag,str);
 		  USART2_SendString(str);

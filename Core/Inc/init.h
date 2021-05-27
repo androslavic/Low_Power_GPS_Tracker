@@ -24,3 +24,7 @@ int sleepOK;
 int timeout;
 int interruptSet;
 int interruptTIM;
+int locationFlag;
+int messageFlag;
+int findLocation;
+int callFlag;

@@ -6,7 +6,7 @@
 typedef struct {
 
 	char phone[20];
-	char text[20];
+	char text[4];
 }message;
 
 void checkSMS(void);

@@ -172,16 +172,13 @@ void sendCommand (char *str){
 	  if (strstr(str,"aabb1")) {
 
 		  cleanBuffer(str);
-		  USART2_SendString(buffer1);
+		  if (messageFlag==0)
+			  messageFlag=1;
+		  else
+			  messageFlag=0;
 
 	  }
 
-	  if (strstr(str,"aabb2")) {
-
-		  cleanBuffer(str);
-		  USART2_SendString(buffer2);
-
-	  }
 
 	  //everything else, performed when pressed ENTER
 	  if (strchr(str,'\r')) {LPUART1_SendString(str);}
